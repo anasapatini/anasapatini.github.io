@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Portfolio – Working with Children, Families and Communities</title>
+<link href="https://fonts.googleapis.com/css2?family=Alice&family=Dancing+Script:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1C2E6E; --navy-dark:#111B47; --navy-mid:#2A3E80;
+  --lav:#D0DCEF; --lav-deep:#BDD0EC; --lav-light:#EBF0F8; --white:#FFFFFF;
+  --green:#2E7D32; --body-text:#1a2860;
+  --shadow-sm:0 2px 10px rgba(28,46,110,.08);
+  --shadow-md:0 6px 24px rgba(28,46,110,.13);
+  --shadow-lg:0 16px 48px rgba(28,46,110,.2);
+  --radius:10px; --radius-lg:16px;
+  --ease:.22s cubic-bezier(.4,0,.2,1);
+  --script:"Dancing Script",cursive;
+  --serif:"Source Serif 4",Georgia,serif;
+  --sans:"DM Sans",system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--body-text);background:var(--white);font-size:15.5px;line-height:1.78}
+
+/* ── SITE HEADER (legacy) ── */
+.site-header{position:relative;height:100vh;min-height:500px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.site-header img.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.site-header::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0.55)}
+.header-content{position:relative;z-index:2;padding:2rem}
+.header-content h1{font-family:var(--script);font-size:clamp(2.2rem,5vw,4.2rem);color:var(--navy);line-height:1.2;margin-bottom:1rem}
+.header-content h1 em{font-style:italic}
+.header-sub{font-size:.85rem;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);font-weight:500}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;color:var(--navy);font-size:1.5rem;animation:bounce 1.8s infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* ── NAV ── */
+.site-nav{background:var(--navy);position:sticky;top:0;z-index:100;overflow-x:auto;box-shadow:0 2px 16px rgba(17,27,71,.45);scrollbar-width:none}
+.site-nav::-webkit-scrollbar{display:none}
+.nav-inner{display:flex;list-style:none;min-width:max-content;justify-content:center}
+.nav-inner li button{background:none;border:none;color:rgba(255,255,255,.52);font-family:var(--sans);font-size:.73rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.95rem 1.3rem;cursor:pointer;border-bottom:3px solid transparent;transition:color var(--ease),border-color var(--ease);white-space:nowrap}
+.nav-inner li button:hover{color:rgba(255,255,255,.9)}
+.nav-inner li button.active{color:#fff;border-bottom-color:#fff}
+
+/* ── PANELS ── */
+.panel,.ctx-panel{display:none}.panel.active,.ctx-panel.active{display:block}
+.max-w{max-width:1100px;margin:0 auto;padding:0 1.5rem}
+
+/* ── HOME ── */
+.home-intro-wrap{background:var(--lav);padding:3.5rem 2rem}
+.home-intro-inner{max-width:820px;margin:0 auto;text-align:center}
+.home-intro-inner h2{font-family:var(--script);font-size:clamp(1.6rem,3vw,2.4rem);color:var(--navy);margin-bottom:1.2rem}
+.home-intro-inner p{font-size:1rem;color:var(--body-text);line-height:1.8;text-indent:1.5em}
+.found-text{background:var(--lav);padding:2.5rem 1.5rem}
+.found-inner{max-width:820px;margin:0 auto}
+.found-inner p{margin-bottom:.9rem;color:var(--body-text);line-height:1.8;text-indent:1.5em}
+.ctx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;max-width:1100px;margin:2.5rem auto 0;padding:0 1.5rem 3rem}
+.ctx-card-home{background:var(--white);border:2px solid var(--lav-deep);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all var(--ease)}
+.ctx-card-home:hover{border-color:var(--navy);transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.ctx-card-img{width:100%;height:110px;object-fit:cover}
+.ctx-card-bar{height:4px;background:var(--navy)}
+.ctx-card-txt{padding:.8rem .9rem}
+.ctx-card-name{font-size:.85rem;font-weight:700;color:var(--navy);display:block}
+.ctx-card-sub{font-size:.72rem;color:#5a6a9a;display:block;margin-top:.15rem}
+
+/* ── CTX HERO ── */
+.ctx-hero{position:relative;height:300px;overflow:hidden}
+.ctx-hero img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+.ctx-hero:hover img{transform:scale(1.04)}
+.ctx-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(17,27,71,.85) 0%,rgba(17,27,71,.55) 55%,rgba(17,27,71,.2) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:2rem 2.5rem}
+.ctx-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:.35rem}
+.ctx-hero-title{font-family:var(--script);font-size:clamp(1.6rem,3vw,2.4rem);color:#fff;line-height:1.25;margin-bottom:.35rem;text-shadow:0 2px 10px rgba(0,0,0,.25)}
+.ctx-hero-sub{font-size:.84rem;color:rgba(255,255,255,.72);font-style:italic}
+
+/* ── STATS BAND ── */
+.stats-band{display:flex;flex-wrap:wrap;background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 100%);color:#fff;border-bottom:4px solid rgba(255,255,255,.07)}
+.stat-item{flex:1;min-width:160px;padding:1.5rem 1.5rem;text-align:center;border-right:1px solid rgba(255,255,255,.1)}
+.stat-item:last-child{border-right:none}
+.stat-n{font-family:var(--serif);font-size:2.4rem;font-weight:600;color:#fff;line-height:1;letter-spacing:-.02em}
+.stat-l{font-size:.71rem;color:rgba(255,255,255,.65);margin-top:.4rem;line-height:1.45}
+
+/* ── SECTIONS ── */
+.ctx-sec{padding:3.5rem 2rem}
+.bg-white{background:var(--white)}
+.bg-lav{background:var(--lav)}
+.ctx-sec>*{max-width:960px;margin-left:auto;margin-right:auto}
+.ctx-sec p{margin-bottom:.85rem;line-height:1.8;color:var(--body-text);text-indent:1.5em}.ctx-sec h3+p,.ctx-sec h3+div p:first-child,.ctx-sec h4+p{text-indent:0}
+.ctx-sec p:last-child{margin-bottom:0}
+.sec-h{font-family:var(--script);font-size:2rem;color:var(--navy);margin-bottom:1.5rem;max-width:960px;margin-left:auto;margin-right:auto;padding-bottom:.5rem;border-bottom:2px solid var(--lav-deep);display:block}
+.bg-lav .sec-h{border-bottom-color:rgba(28,46,110,.2)}
+.critical-callout{border-left:4px solid var(--navy);background:rgba(28,46,110,.07);padding:1rem 1.3rem;margin:1.4rem auto;border-radius:0 8px 8px 0;max-width:960px;box-shadow:var(--shadow-sm)}
+.critical-callout p{font-style:italic;color:var(--navy-mid);text-indent:0!important;font-size:.9rem;line-height:1.75}
+
+/* ── TWO IMAGE ROW ── */
+.two-img-row{display:flex;gap:1rem;padding:0 2rem 1.5rem;max-width:960px;margin:0 auto}
+.two-img{width:50%;height:280px;object-fit:cover;border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+
+/* ── POLICY ── */
+.pol-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin:.8rem auto 0;max-width:960px}
+/* Policy + side image layout */
+.pol-img-layout{display:flex;gap:1.5rem;align-items:stretch;max-width:960px;margin:0 auto}
+.pol-main-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:1rem}
+.pol-main-col .pol-grid{grid-template-columns:repeat(2,1fr);margin:0;max-width:none}
+.pol-main-col .critical-callout{margin:0;max-width:none}
+.pol-side-img-wrap{width:240px;flex-shrink:0;border-radius:var(--radius);overflow:hidden}
+.pol-side-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+@media(max-width:768px){.pol-img-layout{flex-direction:column}.pol-side-img-wrap{width:100%;height:240px}}
+.pol-card{background:var(--white);border:1px solid var(--lav-deep);border-radius:var(--radius);padding:1.2rem 1.3rem;transition:box-shadow var(--ease),transform var(--ease)}
+.pol-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.bg-lav .pol-card{background:rgba(255,255,255,.75)}
+.pol-badge{font-size:.67rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;display:block;letter-spacing:.04em}
+.pol-card h4{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:.4rem}
+.pol-card p{font-size:.82rem;color:#2a3860;line-height:1.65;margin:0;text-indent:0!important}
+
+/* ── STRATEGIES ── */
+.strats-wrap{max-width:960px;margin:0 auto}
+.strat-card{display:flex;gap:1.2rem;margin-bottom:1rem;background:rgba(255,255,255,.78);border-radius:var(--radius);padding:1.2rem 1.4rem;align-items:flex-start;box-shadow:var(--shadow-sm);transition:box-shadow var(--ease)}
+.strat-card:hover{box-shadow:var(--shadow-md)}
+.bg-white .strat-card{background:var(--lav-light)}
+.strat-num{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--navy-mid),var(--navy-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-size:.77rem;font-weight:700;flex-shrink:0;margin-top:.1rem;box-shadow:0 2px 6px rgba(28,46,110,.3)}
+.strat-body h4{font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:.3rem}
+.strat-body p{font-size:.84rem;color:#2a3860;margin-bottom:.55rem;text-indent:0!important;line-height:1.75}
+.in-practice{background:rgba(46,125,50,.07);border-left:3px solid #2E7D32;border-radius:0 6px 6px 0;padding:.65rem 1rem;margin-top:.6rem!important;color:#1a3320!important;font-size:.83rem!important;line-height:1.7;text-indent:0!important}
+.in-practice strong{color:#1e5c22;font-weight:700;font-size:.8rem;letter-spacing:.03em;text-transform:uppercase}
+
+/* ── PARTNERS ── */
+.parts-wrap{max-width:960px;margin:0 auto}
+.part-card{border-bottom:1px solid var(--lav-deep);padding:1.4rem 0}
+.part-card:last-child{border-bottom:none}
+.part-card h4{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:.25rem}
+.part-contact{font-size:.78rem;color:var(--navy-mid);font-weight:600;margin-bottom:.4rem}
+.part-card p{font-size:.83rem;color:#2a3860;margin-bottom:.2rem;text-indent:0!important}
+.collab-line{background:rgba(28,46,110,.07);border-left:3px solid var(--navy-mid);border-radius:0 6px 6px 0;padding:.6rem 1rem;margin-top:.6rem!important;font-size:.82rem;color:var(--navy);line-height:1.65;text-indent:0!important}
+.collab-line strong{color:var(--navy-dark);font-weight:700;font-size:.78rem;letter-spacing:.03em;text-transform:uppercase}
+
+/* ── RESOURCES TABS ── */
+.rtype-tabs{display:flex;gap:.6rem;margin-bottom:1.5rem;flex-wrap:wrap;max-width:960px;margin-left:auto;margin-right:auto}
+.rtype-btn{background:none;border:2px solid var(--lav-deep);border-radius:24px;padding:.4rem 1rem;font-family:var(--sans);font-size:.78rem;font-weight:600;cursor:pointer;color:var(--navy-mid);transition:all var(--ease)}
+.bg-lav .rtype-btn{border-color:rgba(28,46,110,.25)}
+.rtype-btn:hover{border-color:var(--navy);color:var(--navy)}
+.rtype-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 2px 8px rgba(28,46,110,.3)}
+.rt-panel{display:none;max-width:960px;margin:0 auto}.rt-panel.active{display:block}
+.res-subh{font-family:var(--script);font-size:1.5rem;color:var(--navy);margin-bottom:1.2rem}
+
+/* ── RESOURCE CARDS (shared: Websites + Media) ── */
+.web-grid,.media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem}
+.res-slide{flex:0 0 280px;scroll-snap-align:start;display:flex}
+.res-slide>.web-card,.res-slide>.media-card{flex:1;min-width:0}
+.web-card,.media-card{background:rgba(255,255,255,.85);border:1px solid var(--lav-deep);border-radius:var(--radius);padding:1.2rem;display:flex;flex-direction:column;gap:.4rem;transition:box-shadow var(--ease),transform var(--ease)}
+.web-card:hover,.media-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.web-lbl,.media-lbl{font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--navy-mid)}
+.web-card h5,.media-card h5{font-size:.88rem;font-weight:700;color:var(--navy);margin:0}
+.web-card a,.media-card a{font-size:.75rem;color:var(--navy-mid);text-decoration:none;font-weight:500}
+.web-card a:hover,.media-card a:hover{text-decoration:underline;color:var(--navy)}
+.web-card p,.media-card p{font-size:.82rem;color:#2a3860;line-height:1.65;margin:0;text-indent:0!important}
+.edu-use{background:rgba(208,220,239,.5);border-left:3px solid var(--navy-mid);border-radius:0 6px 6px 0;padding:.6rem 1rem;margin-top:auto!important;font-size:.78rem!important;color:var(--navy);line-height:1.65;text-indent:0!important}
+.edu-use strong{color:var(--navy-dark);font-weight:700;font-size:.75rem;letter-spacing:.03em;text-transform:uppercase}
+
+/* ── CAROUSEL ── */
+.carousel-outer{display:flex;align-items:center;gap:.75rem;overflow:hidden}
+.books-carousel{display:flex;gap:1.2rem;overflow-x:auto;scroll-behavior:smooth;padding:0 .5rem 1rem;flex:1;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--lav-deep) transparent}
+.books-carousel::-webkit-scrollbar{height:5px}
+.books-carousel::-webkit-scrollbar-track{background:transparent}
+.books-carousel::-webkit-scrollbar-thumb{background:var(--navy-mid);border-radius:3px}
+.book-slide{flex:0 0 270px;scroll-snap-align:start;background:rgba(255,255,255,.85);border:1px solid var(--lav-deep);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:box-shadow var(--ease),transform var(--ease)}
+.book-slide:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.book-cover-img{width:100%;height:220px;object-fit:contain;object-position:center top;display:block;background:#f4f4f6;padding:6px 0}
+.book-slide-body{padding:1rem 1.1rem;flex:1;display:flex;flex-direction:column;gap:.4rem;min-height:0}
+.book-slide-body h5{font-size:.88rem;font-weight:700;color:var(--navy);margin:0}
+.book-slide-body p{font-size:.82rem;color:#2a3860;line-height:1.65;text-indent:0!important}
+.book-slide-body > p:not(.edu-use){flex:1;min-height:0}
+.book-slide .edu-use{margin-top:0!important}
+.age-badge,.eylf-tag{font-size:.63rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.age-badge{color:var(--navy-mid)}
+.eylf-tag{display:inline-block;margin-top:.4rem;background:rgba(46,125,50,.1);color:#1e5c22;border:1px solid rgba(46,125,50,.25);border-radius:20px;padding:.2rem .7rem;line-height:1.5}
+.car-btn{background:var(--navy);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:1.5rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background var(--ease),transform var(--ease);box-shadow:var(--shadow-sm)}
+.car-btn:hover{background:var(--navy-dark);transform:scale(1.1)}
+
+/* ── MEDIA ── */
+
+/* ── REF ── */
+.ref-wrap{max-width:960px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.ref-h{font-family:var(--script);font-size:1.5rem;color:var(--navy);margin:2rem 0 .8rem;padding-bottom:.35rem;border-bottom:2px solid var(--lav-deep)}
+.ref-list{list-style:none}
+.ref-list li{font-size:.85rem;color:#2a3860;padding:.45rem 0 .45rem 2em;text-indent:-2em;border-bottom:1px solid rgba(0,0,0,.04);line-height:1.7}
+.ref-list a{color:var(--navy);text-decoration:none}
+.ref-list a:hover{text-decoration:underline}
+.genai-box{background:linear-gradient(135deg,#EEF7FB,#E6F2F7);border:1px solid #B5D8E5;border-radius:var(--radius);padding:1.4rem 1.6rem;margin-top:2rem}
+.genai-box h4{font-size:.93rem;font-weight:700;color:var(--navy);margin-bottom:.5rem}
+.genai-box p{font-size:.83rem;color:#2a3860;margin-bottom:.4rem;text-indent:0!important}
+.ref-tabs{background:var(--navy-mid);display:flex;justify-content:center;gap:.45rem;padding:.7rem 1rem;flex-wrap:wrap;box-shadow:0 3px 12px rgba(17,27,71,.3);border-bottom:1px solid rgba(255,255,255,.1)}
+.ref-tab-btn{background:none;border:1.5px solid rgba(255,255,255,.28);color:rgba(255,255,255,.65);border-radius:20px;padding:.28rem .9rem;font-family:var(--sans);font-size:.7rem;font-weight:600;letter-spacing:.05em;cursor:pointer;transition:all .2s;white-space:nowrap}
+.ref-tab-btn:hover{border-color:rgba(255,255,255,.75);color:#fff}
+.ref-tab-btn.active{background:#fff;color:var(--navy);border-color:#fff;font-weight:700}
+.ref-tab-panel{display:none}
+.ref-tab-panel.active{display:block}
+
+.script{font-family:var(--script)!important}
+
+/* ── HERO (uploaded image) ── */
+.site-hero{position:relative;height:100vh;min-height:520px;overflow:hidden}
+.hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%;transition:transform .8s ease}
+.site-hero:hover .hero-bg-img{transform:scale(1.02)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(208,220,239,.08) 0%,rgba(208,220,239,.30) 50%,rgba(208,220,239,.18) 100%);display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem}
+.hero-text{max-width:860px;background:rgba(255,255,255,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.35);border-radius:var(--radius-lg);padding:2.5rem 3rem;box-shadow:var(--shadow-lg)}
+.hero-sub{font-size:.88rem;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);font-weight:500;margin-bottom:.5rem}
+.hero-name{font-size:.78rem;color:var(--navy-mid);letter-spacing:.08em;margin-top:.4rem}
+.scroll-cta{display:block;margin-top:1.5rem;color:var(--navy-mid);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;animation:floatDown 2.2s ease-in-out infinite}
+@keyframes floatDown{0%,100%{transform:translateY(0);opacity:.75}50%{transform:translateY(7px);opacity:1}}
+
+/* ── HOME BANDS ── */
+.home-inner{max-width:860px;margin:0 auto}
+.home-intro-band{background:var(--lav);padding:4.5rem 2rem 4rem}
+.home-h2{font-family:var(--script);font-size:clamp(1.6rem,3vw,2.5rem);color:var(--navy);margin-bottom:1.2rem;text-align:center}
+.home-intro-band p{color:var(--body-text);line-height:1.85;font-size:1rem;text-indent:1.5em}
+.found-band{background:var(--white);padding:3rem 2rem}
+.found-h{font-family:var(--script);font-size:1.9rem;color:var(--navy);margin-bottom:1.2rem;border-bottom:2px solid var(--lav-deep);padding-bottom:.4rem}
+.found-band p{color:var(--body-text);line-height:1.85;margin-bottom:.9rem;text-indent:1.5em}
+
+/* ── THEORY CARDS ── */
+.theory-band{background:var(--lav);padding:3.5rem 2rem}
+.theory-h{font-family:var(--script);font-size:2rem;color:var(--navy);text-align:center;margin-bottom:2rem}
+.theory-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem}
+.theory-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:box-shadow var(--ease),transform var(--ease)}
+.theory-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-5px)}
+.theory-img-wrap{position:relative;height:200px;background:var(--lav-deep);overflow:hidden}
+.theory-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.theory-card:hover .theory-img-wrap img{transform:scale(1.07)}
+.theory-img-wrap.img-placeholder img{opacity:0}
+.img-placeholder-text{display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-size:.8rem;color:var(--navy-mid);font-style:italic}
+.theory-img-wrap.img-placeholder .img-placeholder-text{display:flex}
+.theory-body{padding:1.2rem 1.3rem;flex:1}
+.theory-body h4{font-size:.93rem;font-weight:700;color:var(--navy);margin-bottom:.5rem}
+.theory-body p{font-size:.82rem;color:#2a3860;line-height:1.65;text-indent:0!important;margin:0}
+
+/* ── NAV GUIDE ── */
+.nav-guide-band{background:var(--lav);padding:1.5rem 2rem 4rem}
+.nav-guide-h{font-family:var(--script);font-size:1.9rem;color:var(--navy);margin-bottom:.6rem;text-align:center}
+.nav-guide-sub{font-size:.9rem;color:var(--navy-mid);margin-bottom:2rem;line-height:1.7;max-width:640px;text-align:center;margin-left:auto;margin-right:auto}
+/* ── HOME QUICK GRID ── */
+.ctx-quick-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-top:1.5rem;max-width:960px;margin-left:auto;margin-right:auto}
+.ctx-quick-card{border-radius:var(--radius);overflow:hidden;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform var(--ease),box-shadow var(--ease);background:var(--white)}
+.ctx-quick-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+.ctx-quick-bar{height:5px}
+.ctx-quick-img{width:100%;height:110px;object-fit:cover;display:block}
+.ctx-quick-body{padding:.7rem .9rem}
+.ctx-quick-name{font-size:1.05rem;font-weight:800;color:var(--navy);display:block;letter-spacing:-.01em}
+.ctx-quick-sub{font-size:.68rem;color:#5a6a8a;display:block;margin-top:.3rem;line-height:1.4}
+@media(max-width:768px){.ctx-quick-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:400px){.ctx-quick-grid{grid-template-columns:1fr}}
+.ctx-icon-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.2rem}
+@media(max-width:900px){.ctx-icon-grid{grid-template-columns:repeat(3,1fr)}}
+.ctx-icon-card{background:var(--white);border:2px solid var(--lav-deep);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all var(--ease);display:flex;flex-direction:column;height:100%}
+.ctx-icon-card:hover{border-color:var(--navy);transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.ctx-icon-img{width:100%;height:170px;object-fit:cover;object-position:center;display:block;transition:transform .45s ease;flex-shrink:0}
+.ctx-icon-card:hover .ctx-icon-img{transform:scale(1.06)}
+.ctx-icon-bar{height:5px}
+.ctx-icon-body{padding:.85rem 1rem;flex:1;display:flex;flex-direction:column;gap:.2rem}
+.ctx-icon-name{font-size:1.05rem;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+.ctx-icon-sub{font-size:.7rem;color:#4a5a8a;line-height:1.55;letter-spacing:.01em}
+
+/* ── IMPACT VISUAL SECTION ── */
+.impact-wrap{max-width:960px;margin:0 auto}
+.impact-stat-pull{text-align:center;padding:1.5rem 1rem 2rem;border-bottom:2px solid var(--lav-deep);margin-bottom:2rem}
+.impact-quote{font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.5rem);color:var(--navy);font-style:italic;line-height:1.4;margin-bottom:.6rem;quotes:none}
+.impact-cite{font-size:.8rem;color:var(--navy-mid);font-style:normal;font-weight:500}
+.impact-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.impact-card{background:rgba(255,255,255,.78);border-radius:var(--radius);padding:1.5rem 1.6rem;border-top:4px solid var(--navy);box-shadow:var(--shadow-sm)}
+.bg-white .impact-card{background:var(--lav-light)}
+.impact-children{border-top-color:#1F5F99}
+.impact-families{border-top-color:#2E6B2E}
+.impact-card-hdr{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--lav-deep)}
+.impact-card-hdr h4{font-size:.95rem;font-weight:700;color:var(--navy);margin:0}
+.impact-bullets{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.7rem}
+.impact-bullets li{font-size:.84rem;color:#1a2860;line-height:1.65;padding-left:1.3rem;position:relative}
+.impact-bullets li::before{content:"›";position:absolute;left:0;color:var(--navy);font-weight:700;font-size:1.1rem;top:-.1rem}
+.impact-bullets strong{color:var(--navy)}
+.impact-bullets em{font-style:italic;color:var(--navy-mid)}
+
+/* ── REFERENCES HERO ── */
+.ref-hero-bar{background:var(--lav);padding:2.5rem 2rem 1rem;text-align:center}
+.ref-hero-bar h2{font-family:var(--script);font-size:2.2rem;color:var(--navy)}
+
+/* ── BRONFENBRENNER DIAGRAM ── */
+.bron-split{display:flex;flex-direction:column;gap:1.5rem;margin-top:.5rem}
+.bron-split-text{width:100%}
+.bron-split-text p+p{margin-top:.9rem}
+.bron-split-diagram{width:100%;max-width:560px;margin:0 auto;text-align:center}
+.bron-wrap{text-align:center}
+.bron-diagram-title{font-size:.75rem;font-weight:700;color:var(--navy);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.9rem}
+.bron-svg{width:100%;height:auto;display:block}
+.bron-caption{font-size:.72rem;color:#5a6a8a;font-style:italic;margin-top:.8rem}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .hero-text{padding:1.8rem 2rem;border-radius:12px}
+  .ctx-hero{height:240px}
+  .ctx-overlay{padding:1.5rem 1.5rem}
+  .stats-band{flex-direction:column}
+  .stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.1);padding:1.1rem 1.5rem}
+  .stat-item:last-child{border-bottom:none}
+  .impact-two-col{grid-template-columns:1fr}
+  .two-img-row{flex-direction:column;padding:0 1.25rem 1.25rem}
+  .two-img{width:100%;height:220px}
+  .ctx-sec{padding:2.5rem 1.25rem}
+  .home-intro-band,.found-band,.theory-band,.nav-guide-band{padding-left:1.25rem;padding-right:1.25rem}
+  .hero-overlay{padding:1.25rem}
+}
+@media(max-width:480px){
+  .site-hero{min-height:400px}
+  .hero-text{padding:1.4rem 1.2rem;border-radius:10px}
+  .hero-title{font-size:clamp(1.7rem,7vw,2.6rem)}
+  .ctx-hero{height:180px}
+  .nav-inner li button{padding:.85rem .9rem;font-size:.68rem}
+  .ctx-icon-grid{grid-template-columns:repeat(2,1fr)}
+  .theory-grid{grid-template-columns:repeat(2,1fr)}
+  .pol-grid{grid-template-columns:1fr}
+  .book-slide{flex:0 0 220px}
+  .ref-wrap{padding:1.5rem 1rem 3rem}
+  .two-img{height:180px}
+}
+@media(max-width:380px){
+  .theory-grid,.ctx-icon-grid{grid-template-columns:1fr}
+  .hero-text{padding:1.1rem .9rem}
+}
+
+/* ── MIXED HERO TYPOGRAPHY ── */
+.hero-title{font-family:inherit;font-size:1rem;line-height:1.4;margin-bottom:1.2rem;color:var(--navy)}
+.hero-formal{font-family:'Alice',Georgia,serif;font-size:clamp(1.3rem,2.8vw,2rem);color:var(--navy);font-style:normal;font-weight:400}
+.hero-cursive{font-family:var(--script);font-weight:700;font-size:clamp(2rem,4.8vw,3.6rem);color:var(--navy);line-height:1;vertical-align:bottom}
+
+/* ── CONTEXT SLIDER ── */
+.ctx-slider-wrap{display:flex;align-items:center;gap:.8rem}
+.ctx-slider-outer{flex:1;overflow:hidden}
+.ctx-slider-track{display:flex;align-items:stretch;transition:transform .48s cubic-bezier(.4,0,.2,1);will-change:transform}
+.ctx-slider-item{flex-shrink:0;padding:0 .55rem;display:flex}
+.ctx-arr{background:var(--navy);border:none;color:#fff;width:42px;height:42px;border-radius:50%;font-size:1.8rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background var(--ease),transform var(--ease);box-shadow:var(--shadow-sm);line-height:1}
+.ctx-arr:hover:not(:disabled){background:var(--navy-dark);transform:scale(1.1)}
+.ctx-arr:disabled{opacity:.28;cursor:default}
+.ctx-dots{display:flex;justify-content:center;gap:.45rem;margin-top:1.1rem}
+.ctx-dot{width:8px;height:8px;border-radius:50%;background:var(--lav-deep);border:none;cursor:pointer;padding:0;transition:background var(--ease),transform var(--ease)}
+.ctx-dot.active{background:var(--navy);transform:scale(1.25)}
+
+/* ── DROPDOWN NAV ── */
+.has-dropdown{position:relative;display:flex;align-items:stretch}
+.nav-parent{display:flex;align-items:center;gap:.3rem}
+.nav-caret-btn{background:none;border:none;color:rgba(255,255,255,.52);padding:.95rem .5rem .95rem .1rem;cursor:pointer;transition:color var(--ease);display:flex;align-items:center}
+.nav-caret-btn:hover{color:rgba(255,255,255,.9)}
+#nav-fcc{padding-right:.15rem}
+.nav-caret{font-size:1.1rem;transition:transform .2s ease;display:inline-block;opacity:.85;line-height:1}
+.has-dropdown.open .nav-caret{transform:rotate(180deg)}
+.nav-dropdown{display:none;position:fixed;background:var(--navy-dark);min-width:230px;z-index:9999;border-top:2px solid rgba(255,255,255,.12);box-shadow:0 8px 28px rgba(0,0,0,.4);border-radius:0 0 10px 10px;padding:.3rem 0}
+.has-dropdown.open .nav-dropdown{display:block}
+.nav-dropdown li{list-style:none}
+.nav-dropdown li button{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.62);font-family:var(--sans);font-size:.7rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:.65rem 1.3rem;cursor:pointer;transition:color var(--ease),background var(--ease);white-space:nowrap}
+.nav-dropdown li:last-child button{border-bottom:none}
+.nav-dropdown li button:hover{color:#fff;background:rgba(255,255,255,.08)}
+.nav-dropdown li button.active{color:#fff;background:rgba(255,255,255,.1)}
+.nav-parent.active{color:#fff!important;border-bottom-color:#fff!important}
+/* ── THEORETICAL LENSES CARDS ── */
+.lens-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;max-width:960px;margin:0 auto}
+.lens-card{background:var(--lav-light);border:1px solid var(--lav-deep);border-radius:var(--radius);padding:1.6rem 1.5rem;display:flex;flex-direction:column;gap:.7rem;transition:box-shadow var(--ease),transform var(--ease);border-top:3px solid var(--navy)}
+.lens-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.lens-num{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--lav-deep);line-height:1;letter-spacing:-.02em}
+.lens-title{font-family:var(--serif);font-size:.96rem;font-weight:600;color:var(--navy);line-height:1.35;margin:0}
+.lens-text{font-size:.84rem;color:#2a3860;line-height:1.72;margin:0}
+@media(max-width:600px){.lens-grid{grid-template-columns:1fr}}
+/* ── FCC PAGE CARDS ── */
+.fcc-grid{display:flex;flex-direction:column;gap:.85rem;max-width:760px;margin:0 auto}
+.fcc-card{display:flex;align-items:center;gap:1rem;background:var(--white);border:1px solid var(--lav-deep);border-left:4px solid var(--navy);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all var(--ease);box-shadow:var(--shadow-sm)}
+.fcc-card:hover{box-shadow:var(--shadow-md);transform:translateX(4px)}
+.fcc-card-bar{width:5px;align-self:stretch;flex-shrink:0}
+.fcc-card-body{flex:1;padding:.9rem .5rem .9rem 0}
+.fcc-card-title{display:block;font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:.25rem}
+.fcc-card-sub{display:block;font-size:.74rem;color:#4a5a8a;line-height:1.5}
+.fcc-arrow{font-size:1.2rem;color:var(--lav-deep);margin-right:1.2rem;transition:color var(--ease),transform var(--ease);flex-shrink:0}
+.fcc-card:hover .fcc-arrow{color:var(--navy);transform:translateX(4px)}
+/* ── REF CONTEXT HEADINGS ── */
+.ref-ctx-h{font-family:var(--script);font-size:1.3rem;color:var(--navy);margin:2.5rem 0 .7rem;padding:.5rem 0 .4rem;border-bottom:2px solid var(--lav-deep);display:flex;align-items:center;gap:.6rem}
+.ref-ctx-tag{font-family:var(--sans);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--navy);color:#fff;border-radius:20px;padding:.2rem .7rem}
+.ref-section-label{font-family:var(--sans);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-mid);margin:2rem 0 .5rem;padding-bottom:.3rem;border-bottom:1px solid var(--lav-deep)}
+/* ── SITE FOOTER ── */
+.site-footer{background:var(--navy-dark);color:rgba(255,255,255,.7);text-align:center;padding:1.3rem 2rem;font-size:.78rem;letter-spacing:.06em;font-weight:400;font-style:normal;border-top:3px solid rgba(255,255,255,.07)}
+.site-footer span{margin:0 .4rem;opacity:.45}
+
+/* ── CONTEXT SWITCHER STRIP ── */
+.ctx-switcher{
+  background:var(--navy-mid);
+  position:sticky;
+  top:48px;
+  z-index:98;
+  display:none;
+  justify-content:center;
+  gap:.45rem;
+  padding:.55rem 1rem;
+  flex-wrap:wrap;
+  box-shadow:0 3px 12px rgba(17,27,71,.3);
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.ctx-switcher.visible{display:flex}
+.ctx-sw-btn{
+  background:none;
+  border:1.5px solid rgba(255,255,255,.28);
+  color:rgba(255,255,255,.65);
+  border-radius:20px;
+  padding:.28rem .9rem;
+  font-family:var(--sans);
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.05em;
+  cursor:pointer;
+  transition:all .2s;
+  white-space:nowrap;
+}
+.ctx-sw-btn:hover{border-color:rgba(255,255,255,.75);color:#fff}
+.ctx-sw-btn.active{background:#fff;color:var(--navy);border-color:#fff;font-weight:700}
+
+/* ── CTX PANEL FADE-IN ── */
+@keyframes ctxFadeIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.ctx-panel.active{animation:ctxFadeIn .32s cubic-bezier(.4,0,.2,1) forwards}
+
+/* ── HERO FAMILY TAGS ── */
+.hero-family-pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.9rem;justify-content:flex-start}
+.hero-pill{
+  background:rgba(255,255,255,.13);
+  color:rgba(255,255,255,.92);
+  font-family:var(--sans);
+  font-size:.67rem;
+  font-weight:500;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  padding:.18rem .65rem;
+  border-radius:20px;
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER HERO -->
+
+
+<!-- NAV -->
+<nav class="site-nav">
+  <ul class="nav-inner">
+    <li><button id="nav-home" class="active" onclick="showPanel('home',this)">Home</button></li>
+    <li class="has-dropdown">
+      <button id="nav-fcc" class="nav-parent" onclick="toggleNav(this)">Family &amp; Community Contexts</button><button class="nav-caret-btn" onclick="toggleNav(this.previousElementSibling)" aria-label="Expand contexts menu"><span class="nav-caret">▾</span></button>
+      <ul class="nav-dropdown">
+        <li><button id="nav-eco" onclick="showCtx('eco',this)">Economic Contexts</button></li>
+        <li><button id="nav-soc" onclick="showCtx('soc',this)">Social Contexts</button></li>
+        <li><button id="nav-cul" onclick="showCtx('cul',this)">Cultural &amp; Diversity Contexts</button></li>
+        <li><button id="nav-hea" onclick="showCtx('hea',this)">Health &amp; Wellbeing Contexts</button></li>
+        <li><button id="nav-cri" onclick="showCtx('cri',this)">Crisis &amp; Emergency Contexts</button></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <button id="nav-ref" class="nav-parent" onclick="toggleNav(this)">References <span class="nav-caret">▾</span></button>
+      <ul class="nav-dropdown">
+        <li><button onclick="showRef('reftab-general')">General &amp; Core Texts</button></li>
+        <li><button onclick="showRef('reftab-eco')">Economic Contexts</button></li>
+        <li><button onclick="showRef('reftab-soc')">Social Contexts</button></li>
+        <li><button onclick="showRef('reftab-cul')">Cultural &amp; Diversity Contexts</button></li>
+        <li><button onclick="showRef('reftab-hea')">Health &amp; Wellbeing Contexts</button></li>
+        <li><button onclick="showRef('reftab-cri')">Crisis &amp; Emergency Contexts</button></li>
+        <li><button onclick="showRef('reftab-ai')">Generative AI Bibliography</button></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+<div id="ctx-switcher" class="ctx-switcher">
+  <button class="ctx-sw-btn" data-ctx="eco" onclick="showCtx('eco',this)">Economic Contexts</button>
+  <button class="ctx-sw-btn" data-ctx="soc" onclick="showCtx('soc',this)">Social Contexts</button>
+  <button class="ctx-sw-btn" data-ctx="cul" onclick="showCtx('cul',this)">Cultural &amp; Diversity</button>
+  <button class="ctx-sw-btn" data-ctx="hea" onclick="showCtx('hea',this)">Health &amp; Wellbeing</button>
+  <button class="ctx-sw-btn" data-ctx="cri" onclick="showCtx('cri',this)">Crisis &amp; Emergency</button>
+</div>
+
+
+<main>
+
+
+<!-- HOME -->
+<div id="home" class="panel active">
+
+  <!-- HERO with uploaded image -->
+  <div class="site-hero">
+    <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1600&q=85&auto=format&fit=crop" alt="Mother holding young child" class="hero-bg-img">
+    <div class="hero-overlay">
+      <div class="hero-text">
+        <h1 class="hero-title"><span class="hero-formal">Working with </span><span class="hero-cursive">Children, Families and Communities</span><span class="hero-formal"> in Contemporary Society</span></h1>
+        <p class="hero-sub">Professional Resource Portfolio &ndash; Early Childhood Education</p>
+        <span class="scroll-cta">&#9660; Scroll to explore</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRODUCTION -->
+  <div class="home-intro-band">
+    <div class="home-inner">
+      <h2 class="home-h2 script">A Critical Professional Resource for Early Childhood Educators</h2>
+      <p>Early childhood education is inherently political, and I approach this portfolio from that conviction. Supporting children facing disadvantage, displacement, trauma, or systemic inequity requires me to understand how these conditions are produced through policy, institutions, and historical power, and to respond with ethical rigour and purposeful advocacy. This is consistent with the Early Childhood Australia Code of Ethics (Early Childhood Australia [ECA], 2016), which places ethical, respectful, and socially responsible practice at the centre of professional identity.</p>
+    </div>
+  </div>
+
+  <!-- THEORETICAL FOUNDATIONS -->
+  <div class="ctx-sec bg-white">
+    <h3 class="sec-h script">Theoretical Foundations</h3>
+    <div style="max-width:780px;margin:0 auto 1.8rem">
+      <p style="margin-bottom:.9rem">This portfolio draws on ecological and critical sociological perspectives to make structural inequality visible. Bronfenbrenner&rsquo;s bioecological theory is foundational because it demonstrates that children develop within nested, interconnected systems (microsystem, mesosystem, exosystem, macrosystem, and chronosystem) and that early childhood settings play a critical <strong>mesosystem</strong> role, linking children&rsquo;s home lives with the broader social world (Bronfenbrenner, 1979, as cited in Murray &amp; Harrison, 2022, p. 216). This model anchors the portfolio because it frames every context explored (economic, social, cultural, health, and crisis) as part of a layered system that shapes children&rsquo;s development. Critical theory extends this by questioning whose experiences are centred and how systems may reproduce inequality while appearing supportive (Grace &amp; Menzie, 2022, p. 287).</p>
+      <p>Attachment theory reinforces that early childhood practice must remain relational at its core. When attachment is disrupted through separation, trauma, or caregiver unavailability, safe and emotionally available educators can become important sources of stability (Bowlby, 1969, as cited in Cashmore et al., 2022). Strengths-based and rights-based practice also anchors every section of this portfolio. As Woodrow et al. (2022) caution, deficit approaches that define families by the challenges they face and &ldquo;position them as weak and in need of rescue by professionals&rdquo; (p. 363) can reproduce the harm they claim to address.</p>
+    </div>
+    <div class="bron-split">
+      <div class="bron-split-diagram">
+        <div class="bron-wrap">
+          <p class="bron-diagram-title">Bioecological Systems Model</p>
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" class="bron-svg" aria-label="Bronfenbrenner Bioecological Systems Model">
+            <defs>
+              <path id="arc-chrono"     d="M 55,138 A 225,225 0 0,1 445,138"/>
+              <path id="arc-chrono-sub" d="M 71,147 A 207,207 0 0,1 429,147"/>
+              <path id="arc-macro"      d="M 97,162 A 177,177 0 0,1 403,162"/>
+              <path id="arc-macro-sub"  d="M 112,171 A 159,159 0 0,1 388,171"/>
+              <path id="arc-exo"        d="M 133,183 A 135,135 0 0,1 367,183"/>
+              <path id="arc-exo-sub"    d="M 149,192 A 117,117 0 0,1 351,192"/>
+              <path id="arc-meso"       d="M 166,202 A 97,97 0 0,1 334,202"/>
+              <path id="arc-meso-sub"   d="M 177,208 A 84,84 0 0,1 323,208"/>
+              <path id="arc-micro"      d="M 197,220 A 61,61 0 0,1 303,220"/>
+            </defs>
+            <circle cx="250" cy="250" r="250" fill="#FFF3C4"/>
+            <circle cx="250" cy="250" r="200" fill="#C5E8CF"/>
+            <circle cx="250" cy="250" r="155" fill="#C2D5F5"/>
+            <circle cx="250" cy="250" r="115" fill="#E0C5F0"/>
+            <circle cx="250" cy="250" r="80"  fill="#F5C5D5"/>
+            <circle cx="250" cy="250" r="42"  fill="#1C2E6E"/>
+            <text x="250" y="250" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="700" fill="white" font-family="DM Sans, system-ui, sans-serif">Child</text>
+            <text font-size="19" font-weight="700" fill="#1C2E6E" font-family="DM Sans, system-ui, sans-serif">
+              <textPath href="#arc-chrono" startOffset="50%" text-anchor="middle">Chronosystem</textPath>
+            </text>
+            <text font-size="13" font-weight="600" fill="#3a4f70" font-family="DM Sans, system-ui, sans-serif">
+              <textPath href="#arc-chrono-sub" startOffset="50%" text-anchor="middle">Time &amp; life transitions</textPath>
+            </text>
+            <text font-size="17" font-weight="700" fill="#1C2E6E" font-family="DM Sans, system-ui, sans-serif">
+              <textPath href="#arc-macro" startOffset="50%" text-anchor="middle">Macrosystem</textPath>
+            </text>
+            <text font-size="12" font-weight="600" fill="#3a4f70" font-family="DM Sans, system-ui, sans-serif">
+              <textPath href="#arc-macro-sub" startOffset="50%" text-anchor="middle">Culture · laws · values</textPath>
+            </text>
+            <text font-size="15" font-weight="700" fill="#1C2E6E" font-family="DM Sans, system-ui, sans-serif">
+              <textPath href="#arc-exo" startOffset="50%" text-anchor="middle">Exosystem</textPath>
+            </text>
+            <text font-size="11" font-weight="600" fill="#3a4f70" font-family="DM Sans, system-ui, sans-serif">
+              <textPath href="#arc-exo-sub" startOffset="50%" text-anchor="middle">Parents' work · media · policy</textPath>
+            </text>
+            <text font-size="14" font-weight="700" fill="#1C2E6E" font-family="DM Sans, system-ui, sans-serif">
+              <textPath href="#arc-meso" startOffset="50%" text-anchor="middle">Mesosystem</textPath>
+            </text>
+            <text font-size="10.5" font-weight="600" fill="#3a4f70" font-family="DM Sans, system-ui, sans-serif">
+              <textPath href="#arc-meso-sub" startOffset="50%" text-anchor="middle">Family–educator links</textPath>
+            </text>
+            <text font-size="12.5" font-weight="700" fill="#1C2E6E" font-family="DM Sans, system-ui, sans-serif">
+              <textPath href="#arc-micro" startOffset="50%" text-anchor="middle">Microsystem</textPath>
+            </text>
+          </svg>
+          <p class="bron-caption">Bronfenbrenner, 1979, as cited in Murray &amp; Harrison, 2022, p. 216</p>
+        </div>
+      </div>
+    </div>
+    <div class="lens-grid" style="margin-top:2rem">
+          <div class="lens-card">
+            <div class="lens-num">01</div>
+            <h4 class="lens-title">Bronfenbrenner&rsquo;s Bioecological Theory</h4>
+            <p class="lens-text">Children develop within nested systems. Early childhood settings occupy the mesosystem, connecting home life with the broader social world (Bronfenbrenner, 1979, as cited in Murray &amp; Harrison, 2022, p. 216).</p>
+          </div>
+          <div class="lens-card">
+            <div class="lens-num">02</div>
+            <h4 class="lens-title">Critical Theory and Cultural Hegemony</h4>
+            <p class="lens-text">Power operates through policy and institutions. Grace and Menzie (2022) apply this lens to examine how colonial policy has shaped the developmental contexts of First Nations children (p. 287).</p>
+          </div>
+          <div class="lens-card">
+            <div class="lens-num">03</div>
+            <h4 class="lens-title">Attachment Theory</h4>
+            <p class="lens-text">Secure early relationships underpin regulation, trust, and learning. When attachment is disrupted, consistent educators can become critical sources of safety (Bowlby, 1969, as cited in Cashmore et al., 2022).</p>
+          </div>
+          <div class="lens-card">
+            <div class="lens-num">04</div>
+            <h4 class="lens-title">Strengths-Based and Rights-Based Practice</h4>
+            <p class="lens-text">Every child, family, and community holds knowledge and capability. Woodrow et al. (2022) position this as a non-negotiable professional baseline, not optional goodwill (p. 362).</p>
+          </div>
+    </div>
+  </div>
+
+  <!-- FIVE CONTEXTS NAVIGATION -->
+  <div class="ctx-sec bg-lav" style="padding-bottom:5rem">
+    <h3 class="sec-h script" style="text-align:center">Explore the Five Contexts</h3>
+    <p class="nav-guide-sub" style="text-align:center;margin-left:auto;margin-right:auto">Click any context below to explore theory, policy, strategies, partnerships, and curated resources for each area.</p>
+    <div class="ctx-icon-grid" style="max-width:960px;margin:1.5rem auto 0">
+      <div class="ctx-icon-card" onclick="showCtx('eco',document.getElementById('nav-eco'))">
+        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=500&q=75" alt="Economic Contexts" class="ctx-icon-img">
+        <div class="ctx-icon-bar" style="background:#B85C2A"></div>
+        <div class="ctx-icon-body">
+          <span class="ctx-icon-name">Economic Contexts</span>
+          <span class="ctx-icon-sub">Sole-parent · First Nations · Disability · Newly arrived · Rural &amp; remote</span>
+        </div>
+      </div>
+      <div class="ctx-icon-card" onclick="showCtx('soc',document.getElementById('nav-soc'))">
+        <img src="https://images.unsplash.com/photo-1712668055039-bcd572d5a651?w=500&q=75" alt="Social Contexts" class="ctx-icon-img">
+        <div class="ctx-icon-bar" style="background:#1F5F99"></div>
+        <div class="ctx-icon-body">
+          <span class="ctx-icon-name">Social Contexts</span>
+          <span class="ctx-icon-sub">Same-sex parent · Adoptive · Foster · Kinship care · Separated</span>
+        </div>
+      </div>
+      <div class="ctx-icon-card" onclick="showCtx('cul',document.getElementById('nav-cul'))">
+        <img src="https://images.unsplash.com/photo-1613794713137-a78aba4be84a?w=500&q=75" alt="Cultural Contexts" class="ctx-icon-img">
+        <div class="ctx-icon-bar" style="background:#2E6B2E"></div>
+        <div class="ctx-icon-body">
+          <span class="ctx-icon-name">Cultural Contexts</span>
+          <span class="ctx-icon-sub">First Nations · Refugee · Humanitarian entrant · Multigenerational</span>
+        </div>
+      </div>
+      <div class="ctx-icon-card" onclick="showCtx('hea',document.getElementById('nav-hea'))">
+        <img src="https://images.unsplash.com/photo-1569420626546-55b02c8376b1?w=500&q=75" alt="Health Contexts" class="ctx-icon-img">
+        <div class="ctx-icon-bar" style="background:#6B2D7A"></div>
+        <div class="ctx-icon-body">
+          <span class="ctx-icon-name">Health &amp; Wellbeing</span>
+          <span class="ctx-icon-sub">Sole-parent · Blended · Stepfamilies · Perinatal period</span>
+        </div>
+      </div>
+      <div class="ctx-icon-card" onclick="showCtx('cri',document.getElementById('nav-cri'))">
+        <img src="https://images.unsplash.com/flagged/photo-1551887373-6edba6dacbb1?w=500&q=75" alt="Crisis Contexts" class="ctx-icon-img">
+        <div class="ctx-icon-bar" style="background:#8A2840"></div>
+        <div class="ctx-icon-body">
+          <span class="ctx-icon-name">Crisis &amp; Emergency</span>
+          <span class="ctx-icon-sub">Family violence · Foster · Kinship care · First Nations · Displaced</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div id="eco" class="ctx-panel" style="--cc:#B85C2A">
+  <div class="ctx-hero">
+    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1400&q=75" alt="Poverty, Housing Stress, and Financial Hardship">
+    <div class="ctx-overlay">
+      <span class="ctx-eyebrow">Economic Context</span>
+      <h2 class="ctx-hero-title">Poverty, Housing Stress, and Financial Hardship</h2>
+      <p class="ctx-hero-sub">Structural inequality and its consequences for children&rsquo;s development</p>
+      <div class="hero-family-pills"><span class="hero-pill">Sole-parent</span><span class="hero-pill">First Nations</span><span class="hero-pill">Disability</span><span class="hero-pill">Newly arrived</span></div>
+    </div>
+  </div>
+  <div class="stats-band"><div class="stat-item"><div class="stat-n">13.4%</div><div class="stat-l">of Australians, including ~761,000 children, live below the poverty line (ACOSS &amp; UNSW Sydney, 2023)</div></div><div class="stat-item"><div class="stat-n">22%</div><div class="stat-l">of Australian children begin school developmentally vulnerable (Baker et al., 2022, p. 355)</div></div><div class="stat-item"><div class="stat-n">3x</div><div class="stat-l">more likely for disadvantaged children to begin school developmentally vulnerable (Grace &amp; Baird, 2022, p. 248)</div></div></div>
+  <div class="ctx-sec bg-white">
+    <h3 class="sec-h script">1. Understanding the Context</h3>
+    <div class="pol-img-layout">
+      <div class="pol-main-col">
+        <p>Poverty, housing stress, and persistent financial hardship are not the product of individual failure. They are structural outcomes shaped by low wages, insecure employment, rising housing costs, and policy frameworks that manage rather than resolve inequality. In Australia, 13.4% of the population, including approximately 761,000 children, live below the poverty line (ACOSS &amp; UNSW Sydney, 2023). The persistence of child poverty in one of the world&rsquo;s wealthiest nations reflects structural inaction, not personal misfortune.</p>
+        <p>Bronfenbrenner&rsquo;s bioecological theory demonstrates that economic hardship operates across all interconnected systems simultaneously. Financial stress shapes daily routines, parental emotional availability, and access to services, all of which are largely beyond individual family control (Bronfenbrenner, 1979, as cited in Murray &amp; Harrison, 2022, p. 216). Bourdieu&rsquo;s concept of capital deepens this analysis: inequality is reproduced not only through income but through unequal access to knowledge, networks, and institutional power. For families with fewer economic resources, this means reduced access to the cultural and social capital that more advantaged families draw on to access educational systems, compounding disadvantage across generations (Bourdieu, 1986, as cited in Grace &amp; Baird, 2022, p. 243).</p>
+        <p>Families experiencing hardship are not homogeneous. Sole-parent families, First Nations families, families living with disability, newly arrived communities, and those in rural or remote areas encounter overlapping structural barriers. Grace and Baird (2022) demonstrate that children in socio-economically disadvantaged communities are almost three times more likely to begin school developmentally vulnerable (p. 248). As a teacher, I must resist deficit explanations and recognise economic hardship as a structural context that shapes children&rsquo;s opportunities in unequal ways.</p>
+        <p>The conditions of economic hardship in Australia are actively changing. Rising housing costs, sustained inflation, and the spread of insecure, casualised, and gig-economy employment mean that financial stress now reaches families who previously maintained economic stability. ACOSS and UNSW Sydney (2023) document a growing number of working families who cannot cover the difference between wages and the real costs of housing, childcare, and essential goods. As a teacher, this means I cannot identify economic hardship by appearance alone; the context is dynamic, increasingly diverse, and not easily categorised.</p>
+      </div>
+      <div class="pol-side-img-wrap">
+        <img src="https://images.unsplash.com/photo-1704788684420-ea440164eb8d?w=600&q=80&auto=format&fit=crop" alt="City view with bridge in the background">
+      </div>
+    </div>
+  </div>
+  <div class="ctx-sec bg-lav">
+    <h3 class="sec-h script">2. Impact on Children and Families</h3>
+    <div class="impact-wrap">
+  <div class="impact-stat-pull">
+    <blockquote class="impact-quote">&ldquo;22% of Australian children begin school developmentally vulnerable&rdquo;</blockquote>
+    <cite class="impact-cite">Baker et al., 2022, p. 355</cite>
+  </div>
+  <div class="impact-two-col">
+    <div class="impact-card impact-children">
+      <div class="impact-card-hdr"><h4>Impact on Children</h4></div>
+      <ul class="impact-bullets">
+        <li>Economic hardship limits access to <strong>stable housing, nutritious food, healthcare</strong>, and quality learning resources, each a foundational condition for healthy development.</li>
+        <li>Baker et al. (2022) note that approximately 22% of Australian children begin school developmentally vulnerable, with children from disadvantaged communities significantly over-represented (p. 355).</li>
+        <li>Hardship may appear as <em>fatigue, reduced concentration, irregular attendance</em>, or difficulty participating in everyday learning. These outcomes must never be interpreted as evidence of poor parenting or low family commitment.</li>
+        <li>High-quality early childhood settings can buffer the effects of family stress, though only when genuinely accessible and free from stigma (Murray &amp; Harrison, 2022, p. 219).</li>
+      </ul>
+    </div>
+    <div class="impact-card impact-families">
+      <div class="impact-card-hdr"><h4>Impact on Families</h4></div>
+      <ul class="impact-bullets">
+        <li>Poverty often produces <strong>cognitive and emotional overload</strong> for caregivers managing multiple systems with few resources.</li>
+        <li>Apparent low engagement frequently reflects <em>transport barriers, irregular work schedules</em>, digital exclusion, or the daily pressure of meeting basic needs.</li>
+        <li>For <strong>sole-parent families</strong>, these pressures fall on one caregiver alone; for <strong>newly arrived families</strong>, unfamiliarity with systems adds a further layer.</li>
+        <li>My role is not to judge this absence but to ask what barriers are shaping participation and how I can respond more flexibly and respectfully.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+  <div class="ctx-sec bg-white">
+    <h3 class="sec-h script">3. Social Policy and Australian Responses</h3>
+    <div class="pol-img-layout">
+      <div class="pol-main-col">
+        <div class="pol-grid"><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>Child Care Subsidy, 2023 Amendments</h4><p>The Activity Test was removed for vulnerable families. Yet many families remain unable to cover the difference between the subsidy and actual care costs, and the tension between early childhood education as a public good and as a market commodity remains unresolved (Australian Government Department of Education, 2023).</p></div><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>Family Tax Benefit (Parts A and B)</h4><p>Provides supplementary income support for eligible families. ACOSS (2023) argues these payments have not kept pace with the cost of living, meaning hardship may be reduced without being structurally resolved.</p></div><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>Universal Access to Early Childhood Education</h4><p>The commitment to 15 hours of quality preschool for all children in the year before school has expanded participation, but implementation quality varies significantly across communities (Australian Government, 2023). The children who would benefit most remain the least likely to attend.</p></div><div class="pol-card"><div class="pol-badge">📍 State – Queensland</div><h4>Homes for Queenslanders Plan 2023–2027</h4><p>Commits substantial investment to social and affordable housing (Queensland Government, 2023a). Housing demand continues to exceed supply, and the timeline to 2046 means children experiencing housing stress today will have aged out of early childhood services before this commitment is realised.</p></div></div>
+        <div class="critical-callout"><p>Baker et al. (2022) observe that policy increasingly promotes &ldquo;early intervention over crisis management&rdquo; (p. 355), while Woodrow et al. (2022) caution that fragmented service systems continue to place the burden of coordination on the families least resourced to manage it (p. 366). If support remains difficult to access, equity remains a promise rather than a lived reality.</p></div>
+      </div>
+      <div class="pol-side-img-wrap">
+        <img src="https://images.unsplash.com/photo-1484820540004-14229fe36ca4?w=600&q=80&auto=format&fit=crop" alt="Child building with blocks">
+      </div>
+    </div>
+  </div>
+  <div class="ctx-sec bg-lav">
+    <h3 class="sec-h script">4. Evidence-Based Strategies for Practice</h3>
+    <div class="strats-wrap"><div class="strat-card"><div class="strat-num">1</div><div class="strat-body"><h4>Build trust through relationship-based practice.</h4><p>Murray and Harrison (2022) identify family partnership built on agency and belonging as central to quality engagement (p. 229).</p>
+<p class="in-practice"><strong>In practice:</strong> For First Nations families with well-founded reasons to distrust institutions, relationship must be built before participation can be expected. Greeting every family by name and following up individually by phone, rather than relying on group notifications, communicates genuine regard.</p></div></div>
+<div class="strat-card"><div class="strat-num">2</div><div class="strat-body"><h4>Proactively reduce participation barriers.</h4><p>Economic exclusion is structural; responses must be too.</p>
+<p class="in-practice"><strong>In practice:</strong> Auditing all service communications for digital exclusion, eliminating hidden costs, and ensuring no child is visibly excluded due to family finances are baseline obligations (Woodrow et al., 2022, p. 367). For newly arrived families unfamiliar with the subsidy system, and for families living with disability facing transport barriers, this audit must extend to physical accessibility and plain-language communication.</p></div></div>
+<div class="strat-card"><div class="strat-num">3</div><div class="strat-body"><h4>Create emotionally predictable, regulation-supportive environments.</h4><p>Grace et al. (2022) note that chronic adversity can affect attention and impulse regulation (p. 35).</p>
+<p class="in-practice"><strong>In practice:</strong> For children in sole-parent households managing financial stress with no second caregiver to absorb the pressure, or for children newly relocated from rural and remote areas, consistent routines and personalised arrival rituals may be the most stabilising part of their day.</p></div></div>
+<div class="strat-card"><div class="strat-num">4</div><div class="strat-body"><h4>Use strengths-based communication.</h4><p>Woodrow et al. (2022) describe strengths-based practice as focusing on what is working and how those strengths can address challenges (p. 364).</p>
+<p class="in-practice"><strong>In practice:</strong> For First Nations families whose knowledge has been historically devalued, and for families living with disability who frequently encounter deficit framing, this reorientation is not a courtesy; it is an act of professional justice.</p></div></div>
+<div class="strat-card"><div class="strat-num">5</div><div class="strat-body"><h4>Facilitate warm and timely intersectoral referral.</h4><p>Baker et al. (2022) argue children and families are best supported when services are connected rather than fragmented (p. 342).</p>
+<p class="in-practice"><strong>In practice:</strong> For rural and remote families with few local services, knowing which telehealth and outreach options are available is a professional obligation. For newly arrived families, a referral made with the family rather than for them is the difference between genuine support and a gesture. The EYLF V2.0 (AGDE, 2022) positions collaborative partnerships as a core professional responsibility.</p></div></div>
+</div>
+  </div>
+  <div class="ctx-sec bg-white">
+    <h3 class="sec-h script">5. Community and Professional Partnerships</h3>
+    <div class="parts-wrap"><div class="part-card"><div class="part-left"><h4>Brotherhood of St Laurence</h4><div class="part-contact">bsl.org.au</div><p>Advocacy and research-informed programs targeting child poverty and early childhood disadvantage.</p><p class="collab-line"><strong>Collaboration:</strong> Provides the structural evidence base that challenges deficit assumptions in team practice. Referral is most powerful when the educator can name a specific program rather than a general suggestion, reinforcing that hardship is a structural condition the service takes seriously.</p></div></div>
+<div class="part-card"><div class="part-left"><h4>Anglicare Australia</h4><div class="part-contact">anglicare.asn.au</div><p>Emergency relief, financial counselling, housing assistance, and family support.</p><p class="collab-line"><strong>Collaboration:</strong> Baker et al. (2022) argue intersectoral collaboration produces more holistic outcomes (p. 342). Anglicare addresses the material conditions (housing, food, financial stability) that no pedagogical strategy can substitute. This partnership acknowledges what ECE services can identify but cannot resolve independently.</p></div></div>
+<div class="part-card"><div class="part-left"><h4>The Salvation Army</h4><div class="part-contact">salvationarmy.org.au</div><p>Crisis relief, material aid, and referral support.</p><p class="collab-line"><strong>Collaboration:</strong> Addresses the material preconditions for participation. Collaboration is most effective when established before families reach crisis point; a known referral relationship means the educator can act immediately rather than leaving families to face unfamiliar systems alone.</p></div></div>
+<div class="part-card"><div class="part-left"><h4>National Debt Helpline</h4><div class="part-contact">1800 007 007</div><p>Free and confidential financial counselling.</p><p class="collab-line"><strong>Collaboration:</strong> The professional responsibility here is not referral management but relationship: sharing proactively and privately, without stigma, communicates that the service recognises structural hardship rather than personal failure. This distinction is central to strengths-based practice.</p></div></div>
+<div class="part-card"><div class="part-left"><h4>Child and Family Health Nurses</h4><div class="part-contact">via local health centre</div><p>Child development, health monitoring, and early referral support.</p><p class="collab-line"><strong>Collaboration:</strong> Woodrow et al. (2022) note that fragmented services place coordination burdens on families already managing crisis (p. 366). CHNs provide the developmental lens ECE cannot replicate; genuine coordination is a professional obligation, not an optional add-on.</p></div></div>
+</div>
+  </div>
+  <div class="ctx-sec bg-lav">
+    <h3 class="sec-h script">6. Resources for Educators and Children</h3>
+    <div class="rtype-tabs">
+      <button class="rtype-btn active" onclick="showRT('eco','book',this)">📖 Storybooks</button>
+      <button class="rtype-btn" onclick="showRT('eco','media',this)">🎬 Media &amp; Podcasts</button>
+      <button class="rtype-btn" onclick="showRT('eco','web',this)">🌐 Websites</button>
+    </div>
+    <div id="eco-rw" class="rt-panel">
+      <h4 class="res-subh script">Websites</h4>
+      <div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('eco-web-car',-1)">&#8249;</button><div class="books-carousel" id="eco-web-car"><div class="res-slide"><div class="web-card"><div class="web-lbl">Program</div><h5>The Smith Family</h5><a href="https://www.thesmithfamily.com.au" target="_blank">www.thesmithfamily.com.au</a><p>Supports educational engagement for children experiencing disadvantage through scholarship and mentoring programs.</p><p class="edu-use"><strong>Educator use:</strong> Builds understanding of structural barriers to learning; supports access to scholarship programs for eligible families.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Website</div><h5>Australian Council of Social Service (ACOSS)</h5><a href="https://www.acoss.org.au" target="_blank">www.acoss.org.au</a><p>Current data, policy analysis, and advocacy on poverty in Australia. Publishes the authoritative Poverty in Australia report.</p><p class="edu-use"><strong>Educator use:</strong> Strengthens critical understanding of poverty as structural; challenges deficit assumptions in team reflection.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Website</div><h5>Financial Counselling Australia</h5><a href="https://www.financialcounselling.org.au" target="_blank">www.financialcounselling.org.au</a><p>National directory of financial counselling services accessible to families and professionals.</p><p class="edu-use"><strong>Educator use:</strong> Supports warm referrals when families disclose financial stress, enabling empathetic responses rather than judgemental ones.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Framework</div><h5>Be You</h5><a href="https://beyou.edu.au" target="_blank">beyou.edu.au</a><p>Whole-service wellbeing framework for early learning settings developed by Beyond Blue.</p><p class="edu-use"><strong>Educator use:</strong> Supports trauma-aware, relational responses when financial stress affects children&rsquo;s regulation or wellbeing.</p></div></div></div><button class="car-btn" onclick="moveCarousel('eco-web-car',1)">&#8250;</button></div>
+    </div>
+    <div id="eco-rb" class="rt-panel active">
+      <h4 class="res-subh script">Storybooks</h4>
+      <div class="carousel-outer">
+        <button class="car-btn" onclick="moveCarousel('eco-car',-1)">&#8249;</button>
+        <div class="books-carousel" id="eco-car">
+          <div class="book-slide">
+  <img src="https://m.media-amazon.com/images/I/51EfgRyiKJL.jpg" alt="Those Shoes (Boelts, 2007)" class="book-cover-img" onerror="bookImgFallback(this)" data-tried="2">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 4-5</span>
+    <h5>Those Shoes (Boelts, 2007)</h5>
+    <p>Jeremy wants the trainers everyone wears, but his grandmother cannot afford them. He ultimately gives his treasured shoes to a friend who needs them more.</p>
+    <p class="edu-use"><strong>Educator use:</strong> Sort images into &ldquo;needs&rdquo; and &ldquo;wants&rdquo;; discuss what helps people feel included and cared for.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 1.4 (empathy and respect), 2.3 (fairness)</span>
+  </div>
+</div><div class="book-slide">
+  <img src="https://covers.openlibrary.org/b/isbn/9780399257742-L.jpg" alt="Last Stop on Market Street (de la Pena, 2015)" class="book-cover-img" onerror="bookImgFallback(this)">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 3-5</span>
+    <h5>Last Stop on Market Street (de la Pena, 2015)</h5>
+    <p>CJ and his grandmother ride the city bus, and through Nana&rsquo;s eyes CJ learns to find beauty and community in the ordinary world around him.</p>
+    <p class="edu-use"><strong>Educator use:</strong> Children draw a place in their community that makes them feel welcome and explain why it matters.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 2.1 (belonging to communities), 3.1 (wellbeing)</span>
+  </div>
+</div><div class="book-slide">
+  <img src="https://m.media-amazon.com/images/I/91WGiZpabzL._SL1500_.jpg" alt="Each Kindness (Woodson, 2012)" class="book-cover-img" onerror="bookImgFallback(this)" data-tried="2">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 4-5</span>
+    <h5>Each Kindness (Woodson, 2012)</h5>
+    <p>Chloe repeatedly refuses to befriend the new girl Maya, who wears second-hand clothes. A quietly powerful story about the irreversibility of withheld kindness.</p>
+    <p class="edu-use"><strong>Educator use:</strong> Ripple-in-water demonstration; discuss how small acts of inclusion create community.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 1.4 (empathy), 2.3 (fairness and inclusion)</span>
+  </div>
+</div><div class="book-slide">
+  <img src="https://m.media-amazon.com/images/I/71JQcAogogL._SL1500_.jpg" alt="Fly Away Home (Bunting, 1991)" class="book-cover-img" onerror="bookImgFallback(this)" data-tried="2">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 4-5</span>
+    <h5>Fly Away Home (Bunting, 1991)</h5>
+    <p>A young boy and his father live quietly in an airport. Told with dignity and hope, centring the child&rsquo;s perspective on waiting and small acts of community.</p>
+    <p class="edu-use"><strong>Educator use:</strong> Children draw their &ldquo;safe place&rdquo; (a person, place, or feeling), keeping discussion gentle and inclusive.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 1.1 (feeling safe and supported), 3.1 (emotional wellbeing)</span>
+  </div>
+</div>
+        </div>
+        <button class="car-btn" onclick="moveCarousel('eco-car',1)">&#8250;</button>
+      </div>
+    </div>
+    <div id="eco-rm" class="rt-panel">
+      <h4 class="res-subh script">Media &amp; Podcasts</h4>
+      <div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('eco-med-car',-1)">&#8249;</button><div class="books-carousel" id="eco-med-car"><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 3-5 | TV</div><h5>Bluey: "Markets" and "Takeaway" (ABC Kids)</h5><p>Both episodes portray family connection and problem-solving without deficit framing, warmth and resourcefulness as family values.</p><p class="edu-use"><strong>Educator use:</strong> Children draw or discuss an activity their family enjoys together, affirming belonging beyond material wealth.</p><span class="eylf-tag">EYLF V2.0: Outcomes 2.1 (belonging), 3.1 (emotional wellbeing)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 2-4 | TV</div><h5>Daniel Tiger: "Sharing and Community" episodes (PBS Kids)</h5><p>Daniel models fairness, sharing, and cooperation in accessible ways directly applicable to early childhood group settings.</p><p class="edu-use"><strong>Educator use:</strong> Puppet role-play following the episode to practise empathy and social problem-solving.</p><span class="eylf-tag">EYLF V2.0: Outcomes 2.3 (fairness), 1.4 (empathy and respect)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 4-5 | Digital</div><h5>ABC Education: Community and Economics Clips</h5><a href="https://www.abc.net.au/education" target="_blank">www.abc.net.au/education</a><p>Short, curriculum-aligned clips introducing needs, wants, and community exchange within the Australian context.</p><p class="edu-use"><strong>Educator use:</strong> Launch a dramatic play market where children explore economic roles and community interdependence.</p><span class="eylf-tag">EYLF V2.0: Outcomes 4.4 (community connection), 2.4 (social responsibility)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Educator | Podcast</div><h5>Be You Educator Podcast</h5><a href="https://beyou.edu.au" target="_blank">beyou.edu.au</a><p>Professional learning series on wellbeing, inclusion, and ethical responses to disadvantage in early learning settings.</p><p class="edu-use"><strong>Educator use:</strong> Use one episode in team reflection focused on economic hardship; identify one practice change to reduce hidden barriers for families.</p><span class="eylf-tag">EYLF V2.0 Practice Principle: Collaborative Partnerships with Families and Communities</span></div></div></div><button class="car-btn" onclick="moveCarousel('eco-med-car',1)">&#8250;</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="soc" class="ctx-panel" style="--cc:#1F5F99">
+  <div class="ctx-hero">
+    <img src="https://images.unsplash.com/photo-1712668055039-bcd572d5a651?w=1400&q=75" alt="Social Isolation, Family Separation, and Out-of-Home Care">
+    <div class="ctx-overlay">
+      <span class="ctx-eyebrow">Social Contexts</span>
+      <h2 class="ctx-hero-title">Social Isolation, Family Separation, and Out-of-Home Care</h2>
+      <p class="ctx-hero-sub">Systemic disruption, relational safety, and the right to belonging</p>
+      <div class="hero-family-pills"><span class="hero-pill">Same-sex parent</span><span class="hero-pill">Adoptive</span><span class="hero-pill">Foster</span><span class="hero-pill">Kinship care</span></div>
+    </div>
+  </div>
+  <div class="stats-band"><div class="stat-item"><div class="stat-n">46,000</div><div class="stat-l">children in out-of-home care nationally as of June 2020 (Cashmore et al., 2022, p. 270)</div></div><div class="stat-item"><div class="stat-n">11x</div><div class="stat-l">more likely for Aboriginal and Torres Strait Islander children to be in OOHC (Cashmore et al., 2022, p. 271)</div></div><div class="stat-item"><div class="stat-n">6.5x</div><div class="stat-l">more likely for Indigenous children to be subject of a substantiated child protection report (Cashmore et al., 2022, p. 271)</div></div></div>
+  <div class="ctx-sec bg-white">
+    <h3 class="sec-h script">1. Understanding the Context</h3>
+    <div class="pol-img-layout">
+      <div class="pol-main-col">
+    <p>Social isolation, family separation, and out-of-home care (OOHC) are not simply relational difficulties. They are conditions shaped by structural disadvantage, historical policy decisions, and systems that have repeatedly failed the families most in need of support. Bronfenbrenner's bioecological theory helps explain this clearly: children develop within nested, interconnected systems, and early childhood settings occupy the mesosystem, where wellbeing is shaped not only by what happens within educational settings, but by the quality of relationships between family and service (Bronfenbrenner, 1979, as cited in Murray &amp; Harrison, 2022, p. 225). When those relationships are disrupted through separation, placement instability, or community disconnection, children's capacity to engage in learning is directly affected.</p>
+<p>Attachment theory provides an important additional lens because disruptions to primary relationships can profoundly affect children's sense of safety, trust, and emotional regulation (Bowlby, 1969, as cited in Cashmore et al., 2022). For children experiencing placement instability or major family change, the early childhood educator may become one of the most consistent adults in their week. Relationship-building, therefore, cannot be treated as secondary to learning; it is one of the conditions that make learning possible.</p>
+<p>As of June 2020, approximately 46,000 children were in OOHC nationally (Cashmore et al., 2022, p. 270). Aboriginal and Torres Strait Islander children were 11 times more likely to be in OOHC, a figure that reflects colonisation, intergenerational trauma, and systemic bias rather than family failure (Grace &amp; Menzie, 2022, p. 288). Social disruption, however, extends beyond OOHC. Children from same-sex parent families may encounter heteronormative assumptions embedded in enrolment forms and classroom language. Adoptive families may face questions of identity, origins, and disclosure that require particular sensitivity, as children can carry complex narratives about early separation that are not always visible.</p>
+<div class="critical-callout"><p>The 11x over-representation of Indigenous children in out-of-home care is not a measure of family failure. It is a measure of systemic racism, structural disadvantage, and the enduring legacy of policies designed to break First Nations families.</p></div>
+      </div>
+      <div class="pol-side-img-wrap">
+        <img src="https://images.unsplash.com/photo-1632968583685-94155135fa41?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Child wearing Every Child Matters hoodie">
+      </div>
+    </div>
+  </div>
+  <div class="ctx-sec bg-lav">
+    <h3 class="sec-h script">2. Impact on Children and Families</h3>
+    <div class="impact-wrap">
+  <div class="impact-stat-pull">
+    <blockquote class="impact-quote">&ldquo;46,000 children were in out-of-home care nationally as of June 2020&rdquo;</blockquote>
+    <cite class="impact-cite">Cashmore et al., 2022, p. 270</cite>
+  </div>
+  <div class="impact-two-col">
+    <div class="impact-card impact-children">
+      <div class="impact-card-hdr"><h4>Impact on Children</h4></div>
+      <ul class="impact-bullets"><li>Social isolation, separation, and care disruption affect <strong>emotional security, identity development, peer relationships</strong>, and learning in cumulative ways.</li><li>Repeated changes of carers, schools, and workers disrupt educational continuity and children's capacity to maintain a coherent sense of self (Cashmore et al., 2022, p. 275).</li><li>Children may present through <strong>withdrawal, anxiety, dysregulation</strong>, or persistently testing relational limits (adaptive responses to relational uncertainty, not character flaws requiring correction).</li><li>The EYLF V2.0 (AGDE, 2022) recognises belonging as a condition actively created through intentional practice.</li></ul>
+    </div>
+    <div class="impact-card impact-families">
+      <div class="impact-card-hdr"><h4>Impact on Families</h4></div>
+      <ul class="impact-bullets"><li>These contexts often involve <strong>grief, legal complexity, service involvement</strong>, and emotional exhaustion for carers navigating multiple systems simultaneously.</li><li>Apparent low engagement frequently reflects the burden of crisis management rather than disengagement from the child's needs.</li><li>Woodrow et al. (2022) caution that deficit responses discount families' knowledge of their own situations (p. 366).</li><li>For <strong>same-sex parent families</strong> and <strong>adoptive families</strong>, institutional assumptions embedded in forms and communications add their own layer of invisible complexity.</li><li>My role is not to judge this complexity but to ask what is shaping participation and how the service can respond with greater flexibility, safety, and genuine respect.</li></ul>
+    </div>
+  </div>
+</div>
+</div>
+  
+  <div class="ctx-sec bg-white">
+    <h3 class="sec-h script">3. Social Policy and Australian Responses</h3>
+    <div class="pol-img-layout">
+      <div class="pol-main-col">
+        <div class="pol-grid"><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>Safe and Supported: National Framework 2021–2031</h4><p>Promotes earlier family support. Cashmore et al. (2022) argue that child protection responses have historically remained reactive and crisis-oriented, focused on investigation after harm rather than prevention before it (p. 277). This framework signals a shift, but has not yet fundamentally altered that pattern (Department of Social Services, 2021).</p></div><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>Family Law Amendment Act 2023</h4><p>Strengthens protections for children's safety in contested parenting matters, replacing the presumption of equal shared responsibility with a framework centring child safety. Unequal access to legal representation means the most vulnerable families may not fully benefit from these protections.</p></div><div class="pol-card"><div class="pol-badge">📍 State – Queensland</div><h4>Child Protection Act 1999 and Reform Roadmap 2023–2026</h4><p>Guides statutory intervention and OOHC placement. The Reform Roadmap signals a stronger commitment to prevention, but does not yet provide a funded, time-bound response to the structural causes of First Nations over-representation, a significant omission given the 11x disparity (Queensland Government, 2023c).</p></div><div class="pol-card"><div class="pol-badge">📍 State – Queensland</div><h4>Family and Child Connect</h4><p>Queensland's early intervention service connecting families to community supports before crisis escalates. This non-statutory pathway matters because statutory involvement itself can intensify stress and erode the trust that makes meaningful support possible.</p></div></div>
+        <div class="critical-callout"><p>Baker et al. (2022) argue that intersectoral collaboration leads to more holistic outcomes for children and families (p. 346). Policy is meaningful only when it results in support that is relational, timely, and genuinely accessible. It cannot transfer the burden of coordination onto families already managing crisis.</p></div>
+      </div>
+      <div class="pol-side-img-wrap">
+        <img src="https://images.unsplash.com/photo-1768003423293-e5c6302ff1f0?w=600&q=80&auto=format&fit=crop" alt="Child running toward caregiver with open arms">
+      </div>
+    </div>
+  </div>
+  <div class="ctx-sec bg-lav">
+    <h3 class="sec-h script">4. Evidence-Based Strategies for Practice</h3>
+    <div class="strats-wrap"><div class="strat-card"><div class="strat-num">1</div><div class="strat-body"><h4>Prioritise relational safety through consistency and predictability.</h4><p>Murray and Harrison (2022) identify close teacher relationships as central to children's adjustment and belonging (p. 225).</p>
+<p class="in-practice"><strong>In practice:</strong> For children adopted following multiple placements, a consistent key educator communicates permanence that may not have been experienced before. For children in same-sex parent families who experience peer exclusion, a reliably warm and accepting educator relationship is a daily corrective to the invalidation they may encounter outside the service.</p></div></div>
+<div class="strat-card"><div class="strat-num">2</div><div class="strat-body"><h4>Use inclusive, flexible communication across all caregiving arrangements.</h4><p>Using neutral language such as "families and carers" is required under the EYLF V2.0 (AGDE, 2022), which positions inclusive communication as a non-negotiable professional responsibility.</p>
+<p class="in-practice"><strong>In practice:</strong> Enrolment forms that ask only for "mother" and "father" immediately signal to same-sex parent families that the service was not designed for them. For adoptive families, forms assuming biological parentage can force disclosure of adoption history before trust has been established.</p></div></div>
+<div class="strat-card"><div class="strat-num">3</div><div class="strat-body"><h4>Interpret behaviour as communication, not character.</h4><p>Woodrow et al. (2022) caution that deficit framing discounts children's and families' knowledge of their own situations (p. 364). Children in foster care or kinship care, particularly those who experienced early institutionalisation or multiple placements, may present with attachment behaviours that are misread as defiance or anxiety disorders.</p>
+<p class="in-practice"><strong>In practice:</strong> Documenting patterns rather than isolated incidents, and asking what behaviour communicates about safety or connection, produces a more accurate professional response.</p></div></div>
+<div class="strat-card"><div class="strat-num">4</div><div class="strat-body"><h4>Build belonging through identity-affirming curriculum.</h4><p>Curriculum and environment communicate whose family is normal and whose is not. The EYLF V2.0 (AGDE, 2022) requires educators to actively create environments in which all children experience belonging. Displays that include same-sex parent families as everyday representation reduce the social isolation these families experience.</p>
+<p class="in-practice"><strong>In practice:</strong> Designing "All About Me" books without sections requiring biological family information prevents adoptive children from having to choose between participating and disclosing what they are not yet ready to share.</p></div></div>
+<div class="strat-card"><div class="strat-num">5</div><div class="strat-body"><h4>Facilitate early, warm, and coordinated referral.</h4><p>Baker et al. (2022) demonstrate that intersectoral collaboration leads to more holistic outcomes (p. 346).</p>
+<p class="in-practice"><strong>In practice:</strong> Adoptive families may benefit from post-adoption attachment support; a warm referral to an adoption-specialist service is far more effective than generic counselling advice. Same-sex parent families experiencing isolation may benefit from referral to LGBTIQ+ family support networks. The EYLF V2.0 (AGDE, 2022) positions collaborative partnerships as a core professional responsibility.</p></div></div>
+</div>
+  </div>
+  <div class="ctx-sec bg-white">
+    <h3 class="sec-h script">5. Community and Professional Partnerships</h3>
+    <div class="parts-wrap"><div class="part-card"><div class="part-left"><h4>Relationships Australia</h4><div class="part-contact">relationships.org.au</div><p>Family relationship counselling, dispute resolution, and parenting support.</p><p class="collab-line"><strong>Collaboration:</strong> Where co-parenting conflict creates instability, the educator's role is consistent relational safety for the child, not mediation. This partnership provides specialist relational expertise without placing the educator in a role they are not trained to hold.</p></div></div>
+<div class="part-card"><div class="part-left"><h4>Berry Street</h4><div class="part-contact">berrystreet.org.au</div><p>Trauma-informed programs and professional development for children and families affected by instability and OOHC.</p><p class="collab-line"><strong>Collaboration:</strong> The Berry Street Education Model is one of the most rigorously developed trauma-informed frameworks for ECE. Its implementation requires institutional commitment, not individual practitioner goodwill. Baker et al. (2022) make this clear when arguing for systemic rather than ad hoc intersectoral responses (p. 342).</p></div></div>
+<div class="part-card"><div class="part-left"><h4>CREATE Foundation</h4><div class="part-contact">create.org.au</div><p>Advocacy and resources centring the lived experience of children and young people in OOHC.</p><p class="collab-line"><strong>Collaboration:</strong> Children in care are rarely asked what they need from the services that respond to them. CREATE's lived-experience framework challenges the professional tendency to act on behalf of children rather than alongside them. This is a critical distinction in rights-based ECE practice.</p></div></div>
+<div class="part-card"><div class="part-left"><h4>Family Relationship Advice Line</h4><div class="part-contact">1800 050 321</div><p>National information and referral service for separated families.</p><p class="collab-line"><strong>Collaboration:</strong> Carers navigating separation are frequently too overwhelmed to locate support independently. Proactive sharing by a trusted educator reduces the service fragmentation that Woodrow et al. (2022) identify as placing coordination burdens on families least resourced to manage them (p. 366).</p></div></div>
+<div class="part-card"><div class="part-left"><h4>Australian Childhood Foundation</h4><div class="part-contact">childhood.org.au</div><p>Trauma-informed professional training and therapeutic support for children affected by abuse, neglect, and care disruption.</p><p class="collab-line"><strong>Collaboration:</strong> Murray and Harrison (2022) demonstrate that educator relationships are among the strongest predictors of children's resilience (p. 219). ACF's professional development strengthens the relational capacity that is the primary mechanism of that protection.</p></div></div>
+</div>
+  </div>
+  <div class="ctx-sec bg-lav">
+    <h3 class="sec-h script">6. Resources for Educators and Children</h3>
+    <div class="rtype-tabs">
+      <button class="rtype-btn active" onclick="showRT('soc','book',this)">📖 Storybooks</button>
+      <button class="rtype-btn" onclick="showRT('soc','media',this)">🎬 Media &amp; Podcasts</button>
+      <button class="rtype-btn" onclick="showRT('soc','web',this)">🌐 Websites</button>
+    </div>
+    <div id="soc-rw" class="rt-panel">
+      <h4 class="res-subh script">Websites</h4>
+      <div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('soc-web-car',-1)">&#8249;</button><div class="books-carousel" id="soc-web-car"><div class="res-slide"><div class="web-card"><div class="web-lbl">Resource</div><h5>Emerging Minds</h5><a href="https://emergingminds.com.au" target="_blank">emergingminds.com.au</a><p>Trauma, attachment, and family disruption modules. Australia's leading resource for child mental health in family contexts.</p><p class="edu-use"><strong>Educator use:</strong> Strengthens trauma-informed and family-sensitive practice in OOHC contexts; builds understanding of the systemic context rather than locating difficulty within the child.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Resource</div><h5>Relationships Australia</h5><a href="https://relationships.org.au" target="_blank">relationships.org.au</a><p>Practical resources for families managing separation, including information on legal processes and child wellbeing.</p><p class="edu-use"><strong>Educator use:</strong> Supports empathetic communication with caregivers experiencing family change and legal complexity.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Framework</div><h5>Berry Street Education Model</h5><a href="https://berrystreet.org.au" target="_blank">berrystreet.org.au</a><p>Trauma-informed educational framework developed specifically for children affected by adversity and relational disruption.</p><p class="edu-use"><strong>Educator use:</strong> Builds the service's relational and regulatory capacity for children affected by instability. Promotes resilience through co-regulation, not behaviour management.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Advocacy</div><h5>CREATE Foundation</h5><a href="https://create.org.au" target="_blank">create.org.au</a><p>Lived-experience advocacy and practice resources centring the voices of young people with experience of OOHC.</p><p class="edu-use"><strong>Educator use:</strong> Strengthens identity-affirming, rights-based practice for children in care; challenges assumptions about what children in care can and cannot do.</p></div></div></div><button class="car-btn" onclick="moveCarousel('soc-web-car',1)">&#8250;</button></div>
+    </div>
+    <div id="soc-rb" class="rt-panel active">
+      <h4 class="res-subh script">Storybooks</h4>
+      <div class="carousel-outer">
+        <button class="car-btn" onclick="moveCarousel('soc-car',-1)">&#8249;</button>
+        <div class="books-carousel" id="soc-car">
+          <div class="book-slide">
+  <img src="https://m.media-amazon.com/images/I/51WT362ZZTL.jpg" alt="Two Homes (Masurel, 2001)" class="book-cover-img" onerror="bookImgFallback(this)">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 2-4</span>
+    <h5>Two Homes (Masurel, 2001)</h5>
+    <p>Claire has two homes, one with Mum and one with Dad, and in both she is loved and belongs. Presents family separation gently and without shame or blame.</p>
+    <p class="edu-use"><strong>Educator use:</strong> Children create a "home box" showing people and places that make them feel loved, any configuration welcomed.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 1.3 (confident self-identity), 2.1 (belonging)</span>
+  </div>
+</div><div class="book-slide">
+  <img src="https://covers.openlibrary.org/b/isbn/9781904550044-L.jpg" alt="A Safe Place for Rufus (Simmonds, 2003)" class="book-cover-img" onerror="bookImgFallback(this)">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 3-5</span>
+    <h5>A Safe Place for Rufus (Simmonds, 2003)</h5>
+    <p>Rufus must adjust to a new home when his world changes unexpectedly, a gentle story about the feelings of change and the slow building of safety.</p>
+    <p class="edu-use"><strong>Educator use:</strong> Use emotion cards to trace Rufus's feelings from worried to safe; ask what helps children feel safe at the service.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 1.1 (feeling safe and supported), 3.1 (emotional wellbeing)</span>
+  </div>
+</div><div class="book-slide">
+  <img src="https://m.media-amazon.com/images/I/61+x14x5ooL._SL1000_.jpg" alt="When I Miss You (Spelman, 2004)" class="book-cover-img" onerror="bookImgFallback(this)">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 2-4</span>
+    <h5>When I Miss You (Spelman, 2004)</h5>
+    <p>A reassuring picture book helping young children understand and manage the feeling of missing someone they love, without minimising or rushing to resolution.</p>
+    <p class="edu-use"><strong>Educator use:</strong> Create a small "heart box" as a portable comfort object during transitions and distress moments.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 3.1 (emotional wellbeing), 1.2 (resilience and agency)</span>
+  </div>
+</div><div class="book-slide">
+  <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSWW6rZl6Z6zeD_HtcKAX0dHur70fz74X5oal30XvM1IhI5Io7_" alt="My Two Blankets (Kobald, 2014)" class="book-cover-img" onerror="bookImgFallback(this)">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 3-5</span>
+    <h5>My Two Blankets (Kobald, 2014)</h5>
+    <p>A young girl finds comfort in the familiar while slowly building safety in a new place through unexpected friendship.</p>
+    <p class="edu-use"><strong>Educator use:</strong> Create a class "comfort quilt" combining something from home and something new, visible community belonging.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 2.2 (responding to diversity), 1.3 (confident self-identity)</span>
+  </div>
+</div>
+        </div>
+        <button class="car-btn" onclick="moveCarousel('soc-car',1)">&#8250;</button>
+      </div>
+    </div>
+    <div id="soc-rm" class="rt-panel">
+      <h4 class="res-subh script">Media &amp; Podcasts</h4>
+      <div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('soc-med-car',-1)">&#8249;</button><div class="books-carousel" id="soc-med-car"><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 2-4 | TV</div><h5>Play School: "Families" episodes (ABC Kids)</h5><p>Affirms diverse family structures including sole-parent, blended, grandparent-led, and same-sex parent families within a trusted, familiar format.</p><p class="edu-use"><strong>Educator use:</strong> Set up home corner play with diverse family figures; children retell their own family stories through play without direction from the educator.</p><span class="eylf-tag">EYLF V2.0: Outcomes 1.3 (self-identity), 2.1 (belonging)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 2-4 | TV</div><h5>Hey Duggee: "The Moving House Badge" (ABC iView)</h5><p>The Squirrel Club helps a friend move to a new home, exploring feelings of change, endings, and new beginnings with warmth and humour.</p><p class="edu-use"><strong>Educator use:</strong> "What would you take with you? What stays the same even when places change?" Builds continuity and resilience narratives.</p><span class="eylf-tag">EYLF V2.0: Outcomes 1.2 (resilience), 4.1 (persistence and curiosity)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 2-4 | TV</div><h5>Daniel Tiger: "Transition and Separation" episodes (PBS Kids)</h5><p>Daniel navigates unfamiliar situations with adult support, modelling specific coping strategies including "Grown-ups come back."</p><p class="edu-use"><strong>Educator use:</strong> Practise the strategy together; post it at child height; refer to it specifically during arrivals.</p><span class="eylf-tag">EYLF V2.0: Outcomes 3.1 (emotional wellbeing), 1.2 (resilience and agency)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Educator | Podcast</div><h5>Emerging Minds: Out-of-Home Care episodes</h5><a href="https://emergingminds.com.au/resources/podcasts" target="_blank">emergingminds.com.au/resources/podcasts</a><p>Evidence-based professional learning on trauma-informed practice for children entering new placements.</p><p class="edu-use"><strong>Educator use:</strong> Use in team reflection with focus question: "What does this change about how we welcome children into new placements?"</p><span class="eylf-tag">EYLF V2.0 Practice Principle: Responsiveness to Children</span></div></div></div><button class="car-btn" onclick="moveCarousel('soc-med-car',1)">&#8250;</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="cul" class="ctx-panel" style="--cc:#2E6B2E">
+  <div class="ctx-hero"><img src="https://images.unsplash.com/photo-1613794713137-a78aba4be84a?w=1400&q=75" alt="First Nations Families and Immigrant or Refugee Families"><div class="ctx-overlay"><span class="ctx-eyebrow">Cultural and Diversity Contexts</span><h2 class="ctx-hero-title">First Nations Families and Immigrant or Refugee Families</h2><p class="ctx-hero-sub">Cultural hegemony, self-determination, and genuine cultural safety</p>
+      <div class="hero-family-pills"><span class="hero-pill">First Nations</span><span class="hero-pill">Refugee</span><span class="hero-pill">Humanitarian</span><span class="hero-pill">Multigenerational</span></div></div></div>
+  <div class="stats-band"><div class="stat-item"><div class="stat-n">250+</div><div class="stat-l">Aboriginal and Torres Strait Islander language groups across Australia (Woodrow et al., 2022, p. 371)</div></div><div class="stat-item"><div class="stat-n">49%</div><div class="stat-l">of Australians born overseas or with at least one overseas-born parent (Woodrow et al., 2022, p. 371)</div></div><div class="stat-item"><div class="stat-n">1 in 3-5</div><div class="stat-l">Indigenous children forcibly removed from families 1910–1970 (HREOC, 1997, as cited in Grace &amp; Menzie, 2022, p. 288)</div></div></div>
+  <div class="ctx-sec bg-white"><h3 class="sec-h script">1. Understanding the Context</h3><div class="pol-img-layout"><div class="pol-main-col"><p>Children's identities, languages, and sense of belonging are shaped by the cultural worlds they inhabit from birth. Grace and Menzie (2022) draw on Bronfenbrenner's bioecological theory to show that state intervention affecting Aboriginal and Torres Strait Islander children is produced at the macrosystem level and permeates every environment in which they live and learn (p. 287). This lens clarifies how colonisation continues to shape the developmental contexts of First Nations children today.</p><p>Grace and Menzie (2022) use the concept of cultural hegemony to explain how dominant cultural values marginalise Indigenous families and communities (p. 301). These effects are not historical; they persist through intergenerational trauma and deep mistrust of services. The Bringing Them Home report found that between one in three and one in five Indigenous children were forcibly removed between 1910 and 1970 (HREOC, 1997, as cited in Grace &amp; Menzie, 2022, p. 288). As a teacher, I cannot approach First Nations family engagement as though all families have equal reasons to trust institutions.</p><p>For refugee and humanitarian entrant families, Sanagavarapu (2022) shows that transition disrupts relationships, routines, and assumptions, while also noting that families frequently arrive with resilience and hope (pp. 133–144). Multigenerational and joint families from collectivist backgrounds may also experience tensions between extended family structures and services designed around nuclear family norms. Genuine cultural safety requires educators to examine whose knowledge is centred and how practice must be reshaped.</p></div><div class="pol-side-img-wrap"><img src="https://images.unsplash.com/photo-1753909586579-b376d48939ed?w=600&q=80&auto=format&fit=crop" alt="A young aboriginal boy holds a wooden pole"></div></div></div>
+  <div class="ctx-sec bg-lav"><h3 class="sec-h script">2. Impact on Children and Families</h3><div class="impact-wrap">
+  <div class="impact-stat-pull"><blockquote class="impact-quote">&ldquo;Between 1 in 3 and 1 in 5 Indigenous children were forcibly removed between 1910 and 1970&rdquo;</blockquote><cite class="impact-cite">HREOC, 1997, as cited in Grace &amp; Menzie, 2022, p. 288</cite></div>
+  <div class="impact-two-col">
+    <div class="impact-card impact-children"><div class="impact-card-hdr"><h4>Impact on Children</h4></div><ul class="impact-bullets"><li>When children's identities, home languages, and cultural knowledge are genuinely valued, <strong>belonging and learning engagement are strengthened</strong>.</li><li>Grace and Menzie (2022) identify tokenising culture as symbolic violence that undermines identity development (p. 301).</li><li>One multicultural day or a flag collection are <em>not</em> cultural safety; children from diverse backgrounds can recognise the difference between symbolic inclusion and genuine belonging.</li><li>The ECE sector is not culturally neutral; its developmental norms are built within Anglo-Western traditions. Genuine cultural safety requires confronting this.</li></ul></div>
+    <div class="impact-card impact-families"><div class="impact-card-hdr"><h4>Impact on Families</h4></div><ul class="impact-bullets"><li>Many Indigenous parents continue to fear government systems because of the living legacy of child removal; <strong>trust must be earned, not assumed</strong>.</li><li>Sanagavarapu (2022) identifies multiple barriers for refugee and immigrant families: language, transport, limited service knowledge, and complex subsidy navigation (p. 139).</li><li>In <strong>multigenerational households</strong> where grandparents are primary carers, English-only digital communications create additional layers of exclusion.</li><li>The EYLF V2.0 (AGDE, 2022) positions cultural responsiveness and the rights of Aboriginal and Torres Strait Islander children as non-negotiable professional responsibilities.</li></ul></div>
+  </div>
+</div></div>
+  <div class="ctx-sec bg-white"><h3 class="sec-h script">3. Social Policy and Australian Responses</h3>
+    <div class="pol-img-layout">
+      <div class="pol-main-col">
+        <p>Australia's policy responses to cultural diversity and First Nations self-determination span national agreements, curriculum frameworks, and state-level legislation. Each represents an important step, though the gap between policy intent and lived practice for families remains a persistent concern.</p>
+        <div class="pol-grid"><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>National Agreement on Closing the Gap (Coalition of Peaks, 2020)</h4><p>Co-designed with Aboriginal and Torres Strait Islander peak organisations, marking a stronger commitment to self-determination. Grace and Menzie (2022) caution that the language of "closing the gap" can still imply Indigenous children must become more like non-Indigenous children, rather than requiring systems to become more culturally responsive (p. 298).</p></div><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>EYLF V2.0 (AGDE, 2022)</h4><p>Strengthens expectations around cultural responsiveness and anti-bias practice. Implementation continues to depend too heavily on individual educator commitment rather than systemic accountability, and this gap between policy intent and lived practice remains unresolved.</p></div><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>National Settlement Framework (Department of Home Affairs, 2018)</h4><p>Coordinates settlement support for refugee and humanitarian entrants. Sanagavarapu (2022) argues that place-based, integrated community hub models consistently outperform fragmented service responses (p. 141), a finding that current funding structures do not consistently support.</p></div><div class="pol-card"><div class="pol-badge">📍 State – Queensland</div><h4>Human Rights Act 2019 and Path to Treaty Act 2023</h4><p>The Human Rights Act protects cultural rights including the right of Aboriginal and Torres Strait Islander peoples to maintain culture and kinship connections. The Path to Treaty Act establishes a formal pathway toward Treaty (Queensland Government, 2019, 2023b). Their practical implications for early childhood services remain largely untranslated into service-level guidance.</p></div></div>
+        <div class="critical-callout"><p>Grace and Menzie (2022) identify three minimum conditions for meaningful engagement with First Nations families: safe people, safe places, and safe programs (pp. 299–300). These are not aspirational ideals; they are the ethical floor of professional practice.</p></div>
+      </div>
+      <div class="pol-side-img-wrap">
+        <img src="https://images.unsplash.com/photo-1649386525679-214da4fa6676?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Young girl at a school desk">
+      </div>
+    </div>
+  </div>
+  <div class="ctx-sec bg-lav"><h3 class="sec-h script">4. Evidence-Based Strategies for Practice</h3><div class="strats-wrap"><div class="strat-card"><div class="strat-num">1</div><div class="strat-body"><h4>Build safe, reciprocal relationships through sustained community engagement.</h4><p>Grace and Menzie (2022) show that engagement with First Nations families depends on Elders and local leaders and cannot be expedited through goodwill alone (p. 299).</p><p class="in-practice"><strong>In practice:</strong> Attending community events before expecting engagement, and asking to be guided, demonstrate the respect that makes trust possible over time. For refugee and humanitarian families, identifying a bilingual connector before a child's first day means the first relationship at the service is a familiar face, not a form.</p></div></div><div class="strat-card"><div class="strat-num">2</div><div class="strat-body"><h4>Create physical environments that communicate cultural safety before any conversation begins.</h4><p>Grace and Menzie (2022) emphasise that environments signal whether a service is safe long before formal engagement occurs (p. 299).</p><p class="in-practice"><strong>In practice:</strong> For First Nations families, a genuine Welcome to Country and local language at the entrance communicates the service has taken its relationship with Country seriously. For refugee and humanitarian families, multilingual welcome signs signal that the child's home language is valued, not a barrier to manage.</p></div></div><div class="strat-card"><div class="strat-num">3</div><div class="strat-body"><h4>Address communication barriers as a systemic, not individual, responsibility.</h4><p>Sanagavarapu (2022) identifies professional interpreters as essential bridges between refugee families and services (p. 137). Asking children to interpret for their parents undermines both the child's development and the family's dignity.</p><p class="in-practice"><strong>In practice:</strong> For First Nations families, communication must also be free from institutional jargon that has historically been weaponised against them, not merely translated.</p></div></div><div class="strat-card"><div class="strat-num">4</div><div class="strat-body"><h4>Embed identity, language, and cultural knowledge in daily curriculum.</h4><p>Cultural responsiveness must become part of daily pedagogy, not a termly event. The EYLF V2.0 (AGDE, 2022) requires educators to actively create environments where all children experience belonging as an ongoing condition, not an occasional inclusion gesture.</p><p class="in-practice"><strong>In practice:</strong> Using home-language greetings every morning makes linguistic safety a daily act for refugee and humanitarian families whose children are learning in a new language while also settling in. Inviting First Nations families to contribute cultural knowledge on their own terms respects the distinction between cultural sharing and cultural performance. Using the name of the Country the service sits on is the minimum expression of the EYLF V2.0 (AGDE, 2022) requirement for respect for First Nations peoples.</p></div></div><div class="strat-card"><div class="strat-num">5</div><div class="strat-body"><h4>Establish genuine, sustained partnerships with community organisations.</h4><p>Baker et al. (2022) argue that children and families are best supported when services are connected rather than fragmented (p. 342).</p><p class="in-practice"><strong>In practice:</strong> Partnerships with Aboriginal community-controlled organisations ensure referrals to First Nations families carry cultural authority, not just goodwill. Partnerships with multicultural settlement services ensure refugee and humanitarian families are supported by organisations that understand the complexity of navigating new systems, languages, and institutions simultaneously.</p></div></div></div></div>
+  <div class="ctx-sec bg-white"><h3 class="sec-h script">5. Community and Professional Partnerships</h3><div class="parts-wrap"><div class="part-card"><h4>SNAICC</h4><div class="part-contact">snaicc.org.au</div><p>National peak body providing culturally safe practice resources and policy guidance for Aboriginal and Torres Strait Islander children.</p><p class="collab-line"><strong>Collaboration:</strong> Grace and Menzie (2022) identify genuine self-determination as the ethical minimum for working with First Nations families (p. 299). Consulting SNAICC before designing curriculum is not an optional courtesy; it is the professional baseline that distinguishes genuine cultural safety from well-intentioned tokenism.</p></div><div class="part-card"><h4>Multicultural Australia</h4><div class="part-contact">multiculturalaustralia.org.au</div><p>Settlement support and intercultural education for refugee and immigrant families in Queensland.</p><p class="collab-line"><strong>Collaboration:</strong> Sanagavarapu (2022) argues integrated community-based models consistently outperform fragmented service responses (p. 141). Multicultural Australia provides culturally grounded expertise that ECE services cannot develop independently from within Anglo-Western professional frameworks.</p></div><div class="part-card"><h4>Settlement Services International (SSI)</h4><div class="part-contact">ssi.org.au</div><p>Tailored settlement, education, and wellbeing support for newly arrived families.</p><p class="collab-line"><strong>Collaboration:</strong> For families entering a new country, language, and institution simultaneously, SSI transforms enrolment from an administrative process into a genuine welcome. Without this bridging support, access remains technically available but practically inaccessible.</p></div><div class="part-card"><h4>Narragunnawali / Reconciliation Australia</h4><div class="part-contact">narragunnawali.org.au</div><p>Supports services to develop Reconciliation Action Plans in early learning settings.</p><p class="collab-line"><strong>Collaboration:</strong> A RAP not co-designed with local First Nations communities is a symbolic document rather than a meaningful commitment. Narragunnawali provides the accountability structure that makes reconciliation a genuine partnership rather than institutional performance.</p></div><div class="part-card"><h4>STARTTS</h4><div class="part-contact">startts.org.au</div><p>Trauma-informed therapeutic support and educator consultation for refugee families.</p><p class="collab-line"><strong>Collaboration:</strong> Educator observation is valuable but limited. STARTTS provides the clinical expertise needed when trauma responses exceed what warm, relationship-based ECE practice can address alone, and referral in these cases is a professional responsibility rather than an admission of failure.</p></div></div></div>
+  <div class="ctx-sec bg-lav">
+    <h3 class="sec-h script">6. Resources for Educators and Children</h3>
+    <div class="rtype-tabs">
+      <button class="rtype-btn active" onclick="showRT('cul','book',this)">📖 Storybooks</button>
+      <button class="rtype-btn" onclick="showRT('cul','media',this)">🎬 Media &amp; Podcasts</button>
+      <button class="rtype-btn" onclick="showRT('cul','web',this)">🌐 Websites</button>
+    </div>
+    <div id="cul-rw" class="rt-panel"><h4 class="res-subh script">Websites</h4><div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('cul-web-car',-1)">&#8249;</button><div class="books-carousel" id="cul-web-car"><div class="res-slide"><div class="web-card"><div class="web-lbl">Platform</div><h5>Narragunnawali</h5><a href="https://narragunnawali.org.au" target="_blank">narragunnawali.org.au</a><p>Supports the development of community-informed Reconciliation Action Plans for early learning settings.</p><p class="edu-use"><strong>Educator use:</strong> Strengthens whole-service understanding of reconciliation in practice, aligned with Grace and Menzie's (2022) safe programs framework (pp. 299-300).</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Peak Body</div><h5>SNAICC</h5><a href="https://snaicc.org.au" target="_blank">snaicc.org.au</a><p>Culturally safe curriculum and family engagement resources; the authoritative professional reference for working with First Nations children and families.</p><p class="edu-use"><strong>Educator use:</strong> Guides practice with First Nations children and families; consult before designing any curriculum or family engagement relating to First Nations content.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Resource</div><h5>Multicultural Australia</h5><a href="https://multiculturalaustralia.org.au" target="_blank">multiculturalaustralia.org.au</a><p>Settlement and intercultural education resources for Queensland educators working with culturally diverse communities.</p><p class="edu-use"><strong>Educator use:</strong> Builds structural understanding of refugee and immigrant experiences; supports referral for families navigating settlement challenges.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Advocacy</div><h5>Refugee Council of Australia</h5><a href="https://refugeecouncil.org.au" target="_blank">refugeecouncil.org.au</a><p>Current data, policy analysis, and professional guidance on supporting refugee families in Australia.</p><p class="edu-use"><strong>Educator use:</strong> Strengthens structural understanding of the policy context; supports informed professional advocacy on behalf of refugee families.</p></div></div></div><button class="car-btn" onclick="moveCarousel('cul-web-car',1)">&#8250;</button></div></div>
+    <div id="cul-rb" class="rt-panel active"><h4 class="res-subh script">Storybooks</h4>
+      <div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('cul-car',-1)">&#8249;</button><div class="books-carousel" id="cul-car"><div class="book-slide"><img src="https://m.media-amazon.com/images/I/A1YBiwjtfML._SL1500_.jpg" alt="Welcome to Country (Murphy & Kennedy, 2016)" class="book-cover-img" onerror="bookImgFallback(this)"><div class="book-slide-body"><span class="age-badge">Ages 3-5</span><h5>Welcome to Country (Murphy & Kennedy, 2016)</h5><p>Affirms First Nations connection to land, culture, and community through a gentle Welcome to Country ceremony, meaningful for all young children as a practice of respect.</p><p class="edu-use"><strong>Educator use:</strong> Children create a "welcome page" representing a meaningful place; display at the entrance as a renewed community statement.</p><span class="eylf-tag">EYLF V2.0: Outcomes 2.4 (social responsibility), 2.2 (responding to diversity with respect)</span></div></div><div class="book-slide"><img src="https://m.media-amazon.com/images/I/71M+y-0uSrL._SL1000_.jpg" alt="Our Home, Our Heartbeat (Briggs, 2020)" class="book-cover-img" onerror="bookImgFallback(this)"><div class="book-slide-body"><span class="age-badge">Ages 3-5</span><h5>Our Home, Our Heartbeat (Briggs, 2020)</h5><p>A joyful, rhythmic celebration of Aboriginal and Torres Strait Islander identity, music, and resilience, drawing on diverse First Nations communities across Australia.</p><p class="edu-use"><strong>Educator use:</strong> Use rhythm, sound, and movement to celebrate identity; children contribute a sound representing their home.</p><span class="eylf-tag">EYLF V2.0: Outcomes 1.3 (confident self-identity), 2.1 (belonging to communities)</span></div></div><div class="book-slide"><img src="https://m.media-amazon.com/images/I/81j5wn6OjxL._SL1000_.jpg" alt="The Little Refugee (Do & Do, 2011)" class="book-cover-img" onerror="bookImgFallback(this)"><div class="book-slide-body"><span class="age-badge">Ages 4-5</span><h5>The Little Refugee (Do & Do, 2011)</h5><p>Anh Do's childhood story of displacement, danger at sea, and the courage of finding belonging in a new country, told with warmth, humour, and hope.</p><p class="edu-use"><strong>Educator use:</strong> Invite children to explore the idea of a "safe place" through drawing or construction, without requiring personal disclosure.</p><span class="eylf-tag">EYLF V2.0: Outcomes 1.4 (empathy and respect), 3.1 (emotional wellbeing)</span></div></div><div class="book-slide"><img src="https://m.media-amazon.com/images/I/81PZXqVgCBL._SL1500_.jpg" alt="Whoever You Are (Fox, 1997)" class="book-cover-img" onerror="bookImgFallback(this)"><div class="book-slide-body"><span class="age-badge">Ages 2-4</span><h5>Whoever You Are (Fox, 1997)</h5><p>A lyrical, visually rich book exploring shared humanity across cultures, languages, and geographies, reminding children that inside, the hearts of all children beat the same.</p><p class="edu-use"><strong>Educator use:</strong> Class mural showing one thing shared with someone else and one thing uniquely theirs, difference as enriching rather than dividing.</p><span class="eylf-tag">EYLF V2.0: Outcomes 2.2 (responding to diversity), 1.3 (confident self-identity)</span></div></div></div><button class="car-btn" onclick="moveCarousel('cul-car',1)">&#8250;</button></div>
+    </div>
+    <div id="cul-rm" class="rt-panel"><h4 class="res-subh script">Media &amp; Podcasts</h4><div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('cul-med-car',-1)">&#8249;</button><div class="books-carousel" id="cul-med-car"><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 3-5 | TV</div><h5>Little J & Big Cuz (NITV/ABC, 2017-present)</h5><p>Centres Aboriginal and Torres Strait Islander children's everyday experiences of family, Country, and language in an animated series created with First Nations communities.</p><p class="edu-use"><strong>Educator use:</strong> Support respectful discussion about Country and language; learn and use the local language greeting together.</p><span class="eylf-tag">EYLF V2.0: Outcomes 1.3 (self-identity), 2.4 (respect for environment and community)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 2-4 | TV</div><h5>Play School: Multicultural and First Nations episodes (ABC Kids)</h5><p>Affirms diverse languages, foods, and family cultures within the trusted Play School format, providing sustained representation across cultures.</p><p class="edu-use"><strong>Educator use:</strong> Set up a dramatic play provocation using foods, music, and language contributed by enrolled families, placing home cultures at the centre, not the margin.</p><span class="eylf-tag">EYLF V2.0: Outcomes 2.2 (diversity), 5.3 (expressing ideas using a range of media)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 3-5 | TV</div><h5>Bluey: "Curry Quest" and "Flat Pack" (ABC Kids)</h5><p>Celebrates food traditions, multicultural family relationships, and questions of identity and belonging in contemporary Australian family life.</p><p class="edu-use"><strong>Educator use:</strong> Invite children to share or draw a family food or tradition with family permission; create a class recipe collection celebrating cultural diversity.</p><span class="eylf-tag">EYLF V2.0: Outcomes 1.3 (identity), 2.1 (belonging to communities)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Educator | Podcast</div><h5>SNAICC Podcast and Webinar Series</h5><a href="https://snaicc.org.au/resources" target="_blank">snaicc.org.au/resources</a><p>Professional learning on culturally safe practice, anti-racism, and self-determination in early childhood education.</p><p class="edu-use"><strong>Educator use:</strong> Prioritise the "Culturally Safe Environments" episode for whole-team learning; use Grace and Menzie's (2022) safe people, safe places, safe programs framework (pp. 299-300) as a reflective audit.</p><span class="eylf-tag">EYLF V2.0 Practice Principle: Cultural Competence</span></div></div></div><button class="car-btn" onclick="moveCarousel('cul-med-car',1)">&#8250;</button></div></div>
+  </div>
+</div>
+
+<div id="hea" class="ctx-panel" style="--cc:#6B2D7A">
+  <div class="ctx-hero"><img src="https://images.unsplash.com/photo-1569420626546-55b02c8376b1?w=1400&q=75" alt="Parental Mental Illness, Substance Use, Trauma, and Grief"><div class="ctx-overlay"><span class="ctx-eyebrow">Health and Wellbeing Contexts</span><h2 class="ctx-hero-title">Parental Mental Illness, Substance Use, Trauma, and Grief</h2><p class="ctx-hero-sub">Neurological consequences, systemic failures, and the protective role of early childhood settings</p>
+      <div class="hero-family-pills"><span class="hero-pill">Sole-parent</span><span class="hero-pill">Blended</span><span class="hero-pill">Stepfamilies</span><span class="hero-pill">Perinatal</span></div></div></div>
+  <div class="stats-band"><div class="stat-item"><div class="stat-n">1 in 5</div><div class="stat-l">Australians experience a mental health condition in any given year (ABS, 2022)</div></div><div class="stat-item"><div class="stat-n">23%</div><div class="stat-l">of children estimated to live with a parent experiencing mental illness (AIFS, 2020)</div></div><div class="stat-item"><div class="stat-n">1 in 5</div><div class="stat-l">mothers experience postnatal depression or anxiety (PANDA, 2023)</div></div></div>
+  <div class="ctx-sec bg-white"><h3 class="sec-h script">1. Understanding the Context</h3><div class="pol-img-layout"><div class="pol-main-col"><p>Parental mental illness, substance use, trauma, grief, and chronic family stress are not private failures. They are conditions shaped by structural forces including insecure housing, inadequate income support, intergenerational trauma, and unequal access to mental health care. Woodrow et al. (2022) note that these issues frequently cluster together, creating compounding and intergenerational risk that cannot be addressed through individual-level responses alone (p. 365). Recognising this structural dimension is the difference between genuine understanding and reproducing the stigma that prevents families from seeking help.</p><p>When caregivers are emotionally unavailable due to mental illness, grief, or addiction, children's sense of security and capacity for self-regulation are significantly disrupted (Bowlby, 1969, as cited in Cashmore et al., 2022). Perry's neurosequential model explains that repeated exposure to stress activates threat-response systems in ways that reshape how children respond to relationships and learning without consistent relational safety (Perry, 2006, as cited in Woodrow et al., 2022, p. 363). Consistently warm early childhood environments can actively moderate these effects.</p><p>One in five Australians experiences a mental health condition annually (ABS, 2022), and 23% of children are estimated to live with a parent experiencing mental illness (AIFS, 2020). Sole-parent families may face compounded pressure because one caregiver manages parenting, employment, and household responsibilities while also managing their own mental health or recovery. Blended and stepfamilies may experience additional strain as children and adults adjust to new household relationships while also responding to emotional instability within the family.</p></div><div class="pol-side-img-wrap"><img src="https://images.unsplash.com/photo-1754951661104-66d2151d9f40?w=600&q=80&auto=format&fit=crop" alt="Child in doctor costume"></div></div></div>
+  <div class="ctx-sec bg-lav"><h3 class="sec-h script">2. Impact on Children and Families</h3><div class="impact-wrap">
+  <div class="impact-stat-pull"><blockquote class="impact-quote">&ldquo;23% of children live with a parent experiencing mental illness&rdquo;</blockquote><cite class="impact-cite">Australian Institute of Family Studies, 2020</cite></div>
+  <div class="impact-two-col">
+    <div class="impact-card impact-children"><div class="impact-card-hdr"><h4>Impact on Children</h4></div><ul class="impact-bullets"><li>Parental mental illness, grief, and chronic stress affect <strong>attachment, self-regulation, and engagement in learning</strong>.</li><li>Children may present through <strong>withdrawal, anxiety, aggression, or dysregulation</strong> (adaptive responses to uncertainty, not misbehaviour).</li><li>Children experiencing trauma are routinely referred for &ldquo;behaviour support&rdquo; when what they need is <strong>co-regulation and relational safety</strong>.</li><li>Murray and Harrison (2022) demonstrate that warm adult-child relationships can buffer the effects of family stress (p. 219).</li></ul></div>
+    <div class="impact-card impact-families"><div class="impact-card-hdr"><h4>Impact on Families</h4></div><ul class="impact-bullets"><li>For children in <strong>sole-parent households</strong> with no second caregiver to absorb the pressure, effects are compounded; the same applies in <strong>blended families</strong> managing a step-parent's mental health.</li><li>Baker et al. (2022) make clear that children's wellbeing cannot be separated from their caregivers' unresolved needs (p. 355).</li><li>Apparent disengagement frequently reflects <em>exhaustion, shame</em>, or the burden of managing crisis rather than indifference to their child.</li><li>Misidentifying trauma-driven behaviour as a conduct concern delays intervention and locates the problem within the child rather than within the system.</li><li>From my perspective as a teacher, this means I must interpret participation through a structural and relational lens rather than a judgemental one.</li></ul></div>
+  </div>
+</div></div>
+  <div class="ctx-sec bg-white"><h3 class="sec-h script">3. Social Policy and Australian Responses</h3>
+    <div class="pol-img-layout">
+      <div class="pol-main-col">
+        <p>Australia's policy response to parental mental health and child wellbeing spans national frameworks and state-level legislation. Across each, a persistent tension exists between the aspiration to support families early and the reality of underfunded referral pathways that leave those most in need without timely help.</p>
+        <div class="pol-grid"><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>National Mental Health and Suicide Prevention Plan (Australian Government, 2021)</h4><p>Provides an overarching framework for integrated, prevention-focused support with explicit attention to children in the early years. Recognition does not guarantee access, however, and frameworks without funded pathways do not resolve inequity.</p></div><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>Emerging Minds: National Workforce Centre for Child Mental Health</h4><p>One of the most practically accessible investments for educators, providing free, evidence-based professional learning on child mental health and family-sensitive practice. Directly supports ECE practitioners to identify and respond to children affected by parental mental illness.</p></div><div class="pol-card"><div class="pol-badge">📍 State – Queensland</div><h4>Mental Health Act 2016</h4><p>Governs treatment, care, and the rights of people experiencing mental illness in Queensland. Important for educators to understand in the context of acute parental mental health presentations and the legal rights of families within the system (Queensland Government, 2016a).</p></div><div class="pol-card"><div class="pol-badge">📍 State – Queensland</div><h4>Perinatal and Infant Mental Health Policy 2020–2025</h4><p>Supports universal perinatal screening and coordinated care pathways. Screening without adequately resourced referral pathways does not constitute meaningful support, and early childhood services remain largely unintegrated into the formal perinatal mental health response system (Queensland Health, 2020).</p></div></div>
+        <div class="critical-callout"><p>Baker et al. (2022) acknowledge there remains limited evidence about what works best, for which children, and under what conditions (p. 356). This is not grounds for inaction; it is a call for humility, and for practice that is evidence-informed, collaborative, and genuinely centred on what families themselves identify as helpful.</p></div>
+      </div>
+      <div class="pol-side-img-wrap">
+        <img src="https://images.unsplash.com/photo-1604881991720-f91add269bed?w=600&q=80&auto=format&fit=crop" alt="Person holding baby's feet">
+      </div>
+    </div>
+  </div>
+  <div class="ctx-sec bg-lav"><h3 class="sec-h script">4. Evidence-Based Strategies for Practice</h3><div class="strats-wrap"><div class="strat-card"><div class="strat-num">1</div><div class="strat-body"><h4>Create emotionally safe, predictable, and regulation-supportive environments.</h4><p>Predictability reduces activation of threat-response systems and communicates safety before any words are exchanged (Perry, 2006, as cited in Woodrow et al., 2022, p. 363).</p><p class="in-practice"><strong>In practice:</strong> For a child in a sole-parent household where the morning is disrupted by a parent's depression, a warm and predictable welcome may be the most stabilising moment of their day. For a child in a blended family adjusting to a new household configuration, a consistent arrival ritual offers predictability that home cannot yet guarantee.</p></div></div><div class="strat-card"><div class="strat-num">2</div><div class="strat-body"><h4>Co-regulate through warm, attuned relationships.</h4><p>Murray and Harrison (2022) identify warm adult-child relationships as among the strongest predictors of positive developmental outcomes (p. 219).</p><p class="in-practice"><strong>In practice:</strong> For children in sole-parent households whose only caregiver is managing mental health difficulties, the educator may be the most consistent source of warm co-regulation available. Slowing down, naming the feeling, and sustaining full attention without redirecting to tasks are, in effect, the intervention itself.</p></div></div><div class="strat-card"><div class="strat-num">3</div><div class="strat-body"><h4>Interpret behaviour through a trauma-aware, contextual lens.</h4><p>Woodrow et al. (2022) caution that deficit approaches label families while discounting their knowledge (p. 366). A child in a blended family where a step-parent's mental health episodes create unpredictability may present with vigilance or sudden aggression with no obvious trigger.</p><p class="in-practice"><strong>In practice:</strong> Documenting patterns across time, and asking what behaviour communicates about safety or regulation, produces a more accurate response than labelling it as a conduct problem.</p></div></div><div class="strat-card"><div class="strat-num">4</div><div class="strat-body"><h4>Communicate with families non-judgementally and flexibly.</h4><p>Families managing mental illness, grief, or substance-related challenges often carry significant shame and fear of scrutiny (Woodrow et al., 2022, p. 366).</p><p class="in-practice"><strong>In practice:</strong> For a sole-parent managing their own mental health alongside a child's, brief, warm, strengths-focused communication with multiple contact options reduces barriers significantly. For blended families where the mental health difficulty involves a step-parent rather than the biological parent, asking directly who is the best person to communicate with respects the family's own knowledge of their situation. The EYLF V2.0 (AGDE, 2022) positions active support for family participation (not monitoring from a distance) as a core professional responsibility.</p></div></div><div class="strat-card"><div class="strat-num">5</div><div class="strat-body"><h4>Facilitate early, warm, and coordinated referral.</h4><p>Baker et al. (2022) demonstrate that intersectoral collaboration supports more holistic outcomes (p. 346).</p><p class="in-practice"><strong>In practice:</strong> Sole-parent families managing their own mental health alongside childcare are rarely in a position to navigate referral systems independently; a personal warm referral is far more effective than a pamphlet. For blended families where mental health challenges involve complex stepfamily dynamics, referral to a therapist familiar with those structures acknowledges the specific nature of their situation.</p></div></div></div></div>
+  <div class="ctx-sec bg-white"><h3 class="sec-h script">5. Community and Professional Partnerships</h3><div class="parts-wrap"><div class="part-card"><h4>PANDA</h4><div class="part-contact">panda.org.au | 1300 726 306</div><p>Specialist national helpline and resource hub for perinatal anxiety and depression.</p><p class="collab-line"><strong>Collaboration:</strong> 1 in 5 mothers experience postnatal depression or anxiety (PANDA, 2023). The educator's role is early identification and warm referral, not clinical assessment; PANDA provides the specialist pathway that makes this boundary professionally manageable rather than ambiguous.</p></div><div class="part-card"><h4>Emerging Minds</h4><div class="part-contact">emergingminds.com.au</div><p>Evidence-based professional learning and consultation in child mental health and family-sensitive practice.</p><p class="collab-line"><strong>Collaboration:</strong> Baker et al. (2022) note that evidence about what works for which families remains limited (p. 356). Emerging Minds translates emerging research into accessible professional learning, reducing the gap between evidence and practice that deficit responses fill when structured knowledge is absent.</p></div><div class="part-card"><h4>headspace</h4><div class="part-contact">headspace.org.au</div><p>Accessible early intervention mental health support for young people and families.</p><p class="collab-line"><strong>Collaboration:</strong> In blended and stepfamilies, older siblings navigating a step-parent's mental health challenges rarely appear in ECE discussions. headspace provides accessible support for family members whose needs are frequently invisible to services focused only on the enrolled child.</p></div><div class="part-card"><h4>Australian Childhood Foundation</h4><div class="part-contact">childhood.org.au</div><p>Trauma-informed professional training and therapeutic support for children and families.</p><p class="collab-line"><strong>Collaboration:</strong> Woodrow et al. (2022) caution that trauma responses misidentified as conduct problems delay intervention and locate difficulty within the child rather than the system (p. 364). ACF's professional development builds the interpretive capacity needed to make this distinction accurately.</p></div><div class="part-card"><h4>Lifeline Australia</h4><div class="part-contact">lifeline.org.au | 13 11 14</div><p>24-hour crisis support for families in acute distress.</p><p class="collab-line"><strong>Collaboration:</strong> In sole-parent families where one caregiver manages parenting, employment, and mental health without support, acute crisis is a foreseeable risk. Making Lifeline visible and normalised within the service removes the stigma barrier that prevents families from seeking help until it is too late.</p></div></div></div>
+  <div class="ctx-sec bg-lav">
+    <h3 class="sec-h script">6. Resources for Educators and Children</h3>
+    <div class="rtype-tabs">
+      <button class="rtype-btn active" onclick="showRT('hea','book',this)">📖 Storybooks</button>
+      <button class="rtype-btn" onclick="showRT('hea','media',this)">🎬 Media &amp; Podcasts</button>
+      <button class="rtype-btn" onclick="showRT('hea','web',this)">🌐 Websites</button>
+    </div>
+    <div id="hea-rw" class="rt-panel"><h4 class="res-subh script">Websites</h4><div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('hea-web-car',-1)">&#8249;</button><div class="books-carousel" id="hea-web-car"><div class="res-slide"><div class="web-card"><div class="web-lbl">Resource</div><h5>Emerging Minds</h5><a href="https://emergingminds.com.au" target="_blank">emergingminds.com.au</a><p>Australia's leading resource for child mental health in family contexts, with free modules on parental mental illness, trauma, and family-sensitive practice.</p><p class="edu-use"><strong>Educator use:</strong> Complete the "Families Where a Parent Has a Mental Illness" module; builds capacity to recognise trauma-driven behaviour as communication rather than conduct requiring management.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Resource</div><h5>PANDA</h5><a href="https://panda.org.au" target="_blank">panda.org.au</a><p>Perinatal mental health information and referral support for families and professionals across Australia.</p><p class="edu-use"><strong>Educator use:</strong> Strengthens personal knowledge of perinatal mental health presentations to support early, empathetic identification and referral.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Framework</div><h5>Be You</h5><a href="https://beyou.edu.au" target="_blank">beyou.edu.au</a><p>Whole-service mental health and wellbeing framework for early learning settings developed by Beyond Blue.</p><p class="edu-use"><strong>Educator use:</strong> Use the Be You Framework to build a systemic, service-wide approach to wellbeing, not only individual responses to individual children.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Website</div><h5>Raising Children Network</h5><a href="https://raisingchildren.net.au" target="_blank">raisingchildren.net.au</a><p>Evidence-based information on grief, stress, and mental health in accessible language for families and professionals.</p><p class="edu-use"><strong>Educator use:</strong> Share selected articles with families navigating specific challenges; supports respectful, practical professional conversations without clinical overreach.</p></div></div></div><button class="car-btn" onclick="moveCarousel('hea-web-car',1)">&#8250;</button></div></div>
+    <div id="hea-rb" class="rt-panel active"><h4 class="res-subh script">Storybooks</h4>
+      <div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('hea-car',-1)">&#8249;</button><div class="books-carousel" id="hea-car"><div class="book-slide"><img src="https://m.media-amazon.com/images/I/71rpF49wRrL._SL1250_.jpg" alt="The Colour Monster (Llenas, 2012)" class="book-cover-img" onerror="bookImgFallback(this)"><div class="book-slide-body"><span class="age-badge">Ages 2-4</span><h5>The Colour Monster (Llenas, 2012)</h5><p>Assigns a colour to each emotion, making the invisible tangible and manageable for young children through a beautiful, accessible visual system.</p><p class="edu-use"><strong>Educator use:</strong> Emotion jars with coloured tissue paper as a daily check-in ritual, "which colour are you carrying today?" Normalises emotional awareness as routine, not exception.</p><span class="eylf-tag">EYLF V2.0: Outcomes 1.4 (self-awareness), 3.1 (emotional wellbeing)</span></div></div><div class="book-slide"><img src="https://assets.kmart.com.au/transform/1844e071-645c-44bf-913a-1e4bf562b93d/42937623-1" alt="In My Heart (Witek, 2014)" class="book-cover-img" onerror="bookImgFallback(this)"><div class="book-slide-body"><span class="age-badge">Ages 2-4</span><h5>In My Heart (Witek, 2014)</h5><p>Explores the full range of emotions through physical metaphors that resonate with children's bodily experience of feeling, from happiness to loneliness to quietness.</p><p class="edu-use"><strong>Educator use:</strong> Children create "heart pages" illustrating one feeling they know well; display as a class gallery. Builds embodied emotional vocabulary foundational for healthy regulation.</p><span class="eylf-tag">EYLF V2.0: Outcomes 3.1 (emotional wellbeing), 5.3 (expressing ideas using a range of media)</span></div></div><div class="book-slide"><img src="https://m.media-amazon.com/images/I/818Pj9GI4OL._SL1500_.jpg" alt="When Sadness Comes to Call (Eland, 2019)" class="book-cover-img" onerror="bookImgFallback(this)"><div class="book-slide-body"><span class="age-badge">Ages 3-5</span><h5>When Sadness Comes to Call (Eland, 2019)</h5><p>Personifies sadness as a visitor who moves on when welcomed rather than denied, a gently powerful story about the temporariness of difficult emotions.</p><p class="edu-use"><strong>Educator use:</strong> Children draw or describe their "sadness visitor"; build a class list of comfort strategies. Reduces shame around difficult emotions and builds coping agency.</p><span class="eylf-tag">EYLF V2.0: Outcomes 1.2 (resilience and agency), 3.1 (emotional wellbeing)</span></div></div><div class="book-slide"><img src="https://m.media-amazon.com/images/I/A1HY-naN49L._SL1500_.jpg" alt="The Invisible String (Karst, 2000)" class="book-cover-img" onerror="bookImgFallback(this)"><div class="book-slide-body"><span class="age-badge">Ages 2-5</span><h5>The Invisible String (Karst, 2000)</h5><p>Reassures children that love and connection persist across distance, absence, and loss, that we are connected to those we love by a string that cannot be broken.</p><p class="edu-use"><strong>Educator use:</strong> Each child receives a piece of wool as their invisible string; kept in the comfort corner as a self-regulation tool during distress or separation.</p><span class="eylf-tag">EYLF V2.0: Outcomes 1.1 (feeling safe and supported), 3.1 (emotional wellbeing)</span></div></div></div><button class="car-btn" onclick="moveCarousel('hea-car',1)">&#8250;</button></div>
+    </div>
+    <div id="hea-rm" class="rt-panel"><h4 class="res-subh script">Media &amp; Podcasts</h4><div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('hea-med-car',-1)">&#8249;</button><div class="books-carousel" id="hea-med-car"><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 3-5 | Digital</div><h5>Cosmic Kids Yoga: Emotions Adventures</h5><a href="https://www.youtube.com/CosmicKidsYoga" target="_blank">www.youtube.com/CosmicKidsYoga</a><p>Short, guided yoga and mindfulness sequences themed around emotions and self-regulation, developed specifically for early childhood.</p><p class="edu-use"><strong>Educator use:</strong> Integrate as a proactive daily routine, not only a crisis response; post-session: "what is one strategy you can use independently?" Builds embodied resilience through consistent practice.</p><span class="eylf-tag">EYLF V2.0: Outcomes 3.2 (responsibility for wellbeing), 4.1 (dispositions for learning)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 3-5 | TV</div><h5>Bluey: "Bus Ride" and "Sticky Gecko" (ABC Kids)</h5><p>"Bus Ride" portrays a tired Mum managing a challenging trip with warmth; "Sticky Gecko" shows Dad navigating chaos with resilience. Both normalise parental stress within loving family relationships.</p><p class="edu-use"><strong>Educator use:</strong> "How did Mum/Dad feel? What helped? Who do you go to when you feel worried?" Builds empathy for caregiver stress and reduces children's anxiety about parental distress.</p><span class="eylf-tag">EYLF V2.0: Outcomes 1.4 (empathy), 3.1 (emotional wellbeing)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 2-4 | TV</div><h5>Play School: Emotions and Feelings segments (ABC Kids)</h5><p>Affirms children's emotional experiences through story, song, and craft in familiar Australian contexts, providing gentle, accessible emotional vocabulary.</p><p class="edu-use"><strong>Educator use:</strong> Use puppets to re-enact a feeling from the episode; builds emotional narrative and peer empathy with protective distance for children who struggle to discuss their own emotions directly.</p><span class="eylf-tag">EYLF V2.0: Outcomes 3.1 (emotional wellbeing), 5.1 (interacting verbally and non-verbally)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Educator | Podcast</div><h5>Emerging Minds: Perinatal Mental Health episodes</h5><a href="https://emergingminds.com.au/resources/podcasts" target="_blank">emergingminds.com.au/resources/podcasts</a><p>Evidence-based professional learning on family-sensitive practice for children affected by parental mental illness.</p><p class="edu-use"><strong>Educator use:</strong> Complete the accompanying online module; identify one concrete practice change and review its impact at four weeks.</p><span class="eylf-tag">EYLF V2.0 Practice Principle: Ongoing Learning and Reflective Practice</span></div></div></div><button class="car-btn" onclick="moveCarousel('hea-med-car',1)">&#8250;</button></div></div>
+  </div>
+</div>
+
+<div id="cri" class="ctx-panel" style="--cc:#8A2840">
+  <div class="ctx-hero">
+    <img src="https://images.unsplash.com/flagged/photo-1551887373-6edba6dacbb1?w=1400&q=75" alt="Family Violence, Natural Disasters, and Displacement">
+    <div class="ctx-overlay">
+      <span class="ctx-eyebrow">Crisis and Emergency Contexts</span>
+      <h2 class="ctx-hero-title">Family Violence, Natural Disasters, and Displacement</h2>
+      <p class="ctx-hero-sub">Acute crisis, cumulative adversity, and the professional responsibility of ECE services</p>
+      <div class="hero-family-pills"><span class="hero-pill">Family violence</span><span class="hero-pill">Foster</span><span class="hero-pill">First Nations</span><span class="hero-pill">Displaced</span></div>
+    </div>
+  </div>
+  <div class="stats-band"><div class="stat-item"><div class="stat-n">1 in 4</div><div class="stat-l">children estimated to have witnessed or experienced family violence in Australia (AIHW, 2023)</div></div><div class="stat-item"><div class="stat-n">18M ha</div><div class="stat-l">burned in the 2019-20 Black Summer, displacing thousands of families including young children (Royal Commission, 2020)</div></div><div class="stat-item"><div class="stat-n">3rd Plan</div><div class="stat-l">The National Plan to End Violence 2022–2032 is Australia's third such decade-long framework on family violence</div></div></div>
+  <div class="ctx-sec bg-white">
+    <h3 class="sec-h script">1. Understanding the Context</h3>
+    <div class="pol-img-layout">
+      <div class="pol-main-col">
+    <p>Crisis and emergency contexts, including family violence, natural disasters, and displacement, are among the most acute challenges affecting children's safety, development, and participation in early childhood education. Their effects often continue long after the immediate crisis, reshaping routines, attachment relationships, housing stability, and access to services across months and years. Bronfenbrenner's bioecological model helps explain this because crisis disrupts children across all interconnected systems simultaneously, from family relationships to community supports and broader state responses (Bronfenbrenner, 1979, as cited in Murray &amp; Harrison, 2022, p. 216).</p>
+<p>Perry's neurosequential model provides an essential additional lens: repeated or overwhelming exposure to threat activates children's stress-response systems in ways that, without consistent relational safety, reshape how children respond to relationships and learning (Perry, 2006, as cited in Woodrow et al., 2022, p. 363). These responses are adaptive rather than pathological, and consistently safe early childhood environments can actively moderate their effects.</p>
+<p>Crisis does not affect all families equally. Women-led sole-parent households are disproportionately represented among those experiencing family violence, often leaving with children and few financial resources. Foster and kinship care families, and First Nations families in disaster-affected rural communities whose displacement severs connections to Country, face their own compounding pressures. Woodrow et al. (2022) note that adverse childhood experiences multiply where violence, poverty, and social exclusion overlap (p. 363).</p>
+
+<div class="critical-callout"><p>Australia's National Plan to End Violence Against Women and Children 2022–2032 is the third such decade-long framework. The first two plans did not achieve their targets. Significant investment in policy has not translated into measurable safety for women and children, and the communities most affected, including First Nations women and children and those who have fled homelessness after escaping violence, continue to face the greatest gaps between policy commitment and lived reality. This plan demands the same scrutiny its predecessors were not given.</p></div>
+      </div>
+      <div class="pol-side-img-wrap">
+        <img src="https://images.unsplash.com/photo-1521530788377-71ca7371a811?w=600&q=80&auto=format&fit=crop" alt="Child resilience and community support">
+      </div>
+    </div>
+  </div>
+  <div class="ctx-sec bg-lav">
+    <h3 class="sec-h script">2. Impact on Children and Families</h3>
+    <div class="impact-wrap">
+  <div class="impact-stat-pull">
+    <blockquote class="impact-quote">&ldquo;1 in 4 children estimated to have witnessed or experienced family violence&rdquo;</blockquote>
+    <cite class="impact-cite">Australian Institute of Health and Welfare, 2023</cite>
+  </div>
+  <div class="impact-two-col">
+    <div class="impact-card impact-children">
+      <div class="impact-card-hdr"><h4>Impact on Children</h4></div>
+      <ul class="impact-bullets"><li>Family violence, disaster, and displacement profoundly affect <strong>emotional security, attachment, regulation</strong>, peer relationships, and engagement in learning.</li><li>Children may present through <strong>hypervigilance, withdrawal, aggression</strong>, sleep disruption, or difficulty trusting adults.</li><li>The AIHW (2023) identifies exposure to family violence as a major risk factor across all developmental domains, including language development and school readiness.</li><li>What appears as dysregulation at the service may reflect displacement or terror at home; responding with behaviour management rather than co-regulation compounds the harm.</li></ul>
+    </div>
+    <div class="impact-card impact-families">
+      <div class="impact-card-hdr"><h4>Impact on Families</h4></div>
+      <ul class="impact-bullets"><li>Displacement strips away familiar routines, places, and cultural anchors (the ecological scaffolding that supports resilience).</li><li>Baker et al. (2022) illustrate that children's needs in crisis are inseparable from their families' needs: <strong>housing, legal support, trauma recovery</strong>, and financial security (p. 347).</li><li>Early childhood settings may be the <strong>first place families disclose violence</strong>, instability, or fear. This is a profound professional responsibility.</li><li>For <strong>First Nations families</strong> displaced by disaster and separated from Country, the loss of cultural connection intensifies the impact of physical displacement.</li><li>From my perspective as a teacher, early childhood services cannot respond only to the child's visible behaviour. What appears as dysregulation may reflect fear, trauma, or instability, and responding with behaviour management rather than co-regulation compounds the harm already present.</li></ul>
+    </div>
+  </div>
+</div>
+</div>
+  
+  <div class="ctx-sec bg-white">
+    <h3 class="sec-h script">3. Social Policy and Australian Responses</h3>
+    <div class="pol-img-layout">
+      <div class="pol-main-col">
+        <div class="pol-grid"><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>National Plan to End Violence Against Women and Children 2022–2032</h4><p>Explicitly recognises children as victim-survivors in their own right, not only as witnesses. This is Australia's third such decade-long plan; its credibility depends on whether implementation differs from the two plans that preceded it (Department of Social Services, 2022).</p></div><div class="pol-card"><div class="pol-badge">🇦🇺 National</div><h4>Safe and Supported Framework 2021–2031 and National Disaster Risk Reduction Framework</h4><p>Promote trauma-informed child protection responses and disaster resilience respectively. Coordination between these frameworks at the service delivery level remains uneven; policy coherence on paper does not automatically translate into operational support for families and educators.</p></div><div class="pol-card"><div class="pol-badge">📍 State – Queensland</div><h4>Domestic and Family Violence Protection Act 2012 (amended 2016)</h4><p>Governs protection orders and support services for family violence in Queensland. Women and children who leave family violence frequently face housing crisis, financial destitution, and retraumatisation through family court proceedings. The legislative framework does not address these cascading consequences (Queensland Government, 2012).</p></div><div class="pol-card"><div class="pol-badge">📍 State – Queensland</div><h4>DFV Prevention Strategy 2016–2026 and Disaster Management Act 2003</h4><p>Provide Queensland's coordinated response framework for prevention and emergency planning respectively. The integration of early childhood services into local disaster management plans remains variable across local government areas (Queensland Government, 2016b, 2003).</p></div></div>
+        <div class="critical-callout"><p>Baker et al. (2022) caution that despite major policy investment, evidence about what works best, for whom, and under what circumstances remains limited (p. 356). Policy is meaningful only when it becomes timely, coordinated, and accessible support. If families must still face crisis without coordinated support, policy remains more symbolic than actually protective.</p></div>
+      </div>
+      <div class="pol-side-img-wrap">
+        <img src="https://images.unsplash.com/photo-1605713288610-00c1c630ca1e?w=600&q=80&auto=format&fit=crop" alt="Children hugging">
+      </div>
+    </div>
+  </div>
+  <div class="ctx-sec bg-lav">
+    <h3 class="sec-h script">4. Evidence-Based Strategies for Practice</h3>
+    <div class="strats-wrap"><div class="strat-card"><div class="strat-num">1</div><div class="strat-body"><h4>Prioritise safety, predictability, and calm routines as neurological foundations.</h4><p>Perry's neurosequential model demonstrates that safety and predictability must be established before developmental or learning goals can be meaningfully pursued (Perry, 2006, as cited in Woodrow et al., 2022, p. 363).</p>
+<p class="in-practice"><strong>In practice:</strong> Using the same warm greeting every arrival, maintaining daily rhythms when disruptions occur, and establishing calm-down spaces as permanent features of the environment are therapeutic acts. For children who have recently fled a domestic violence situation, this predictability may be their first experience of environmental safety in weeks.</p></div></div>
+<div class="strat-card"><div class="strat-num">2</div><div class="strat-body"><h4>Apply trauma-aware, relationship-based co-regulation.</h4><p>Murray and Harrison (2022) show that close teacher relationships are among the strongest predictors of children's adjustment and wellbeing (p. 225).</p>
+<p class="in-practice"><strong>In practice:</strong> For a child from a women-led sole-parent household who has left a domestic violence situation and lost their entire physical environment overnight, the educator relationship may be the only consistency remaining. Offering calm presence without demands, sitting close, and co-regulating before moving to learning follows the sequence Perry's model supports.</p></div></div>
+<div class="strat-card"><div class="strat-num">3</div><div class="strat-body"><h4>Protect dignity and avoid forced or pressured disclosure.</h4><p>Woodrow et al. (2022) emphasise that children and families must not be passive subjects of professional intervention (p. 376).</p>
+<p class="in-practice"><strong>In practice:</strong> For a child in foster or kinship care following a domestic violence removal, disclosure is especially complex; never asking them to explain trauma in a group setting, responding with calm reassurance, and acting on mandatory reporting obligations promptly are all part of the same professional response.</p></div></div>
+<div class="strat-card"><div class="strat-num">4</div><div class="strat-body"><h4>Communicate with families warmly and without adding pressure.</h4><p>Baker et al. (2022) argue that support must capitalise on family strengths rather than focus exclusively on vulnerability (p. 355).</p>
+<p class="in-practice"><strong>In practice:</strong> For a First Nations family displaced by disaster and separated from Country, or for a sole-parent family managing housing crisis after fleeing violence, simplifying communication, offering one consistent contact person, and never raising developmental concerns on the day of disclosure are ethical obligations, not courtesy choices.</p></div></div>
+<div class="strat-card"><div class="strat-num">5</div><div class="strat-body"><h4>Facilitate timely, warm, and coordinated intersectoral referral.</h4><p>Baker et al. (2022) caution that evidence about what works remains limited, making coordinated responses more critical (p. 356).</p>
+<p class="in-practice"><strong>In practice:</strong> Knowing the direct contact of a local domestic violence caseworker, housing support worker, and disaster recovery service before crisis arises, and making the first call with the family rather than leaving them to manage these systems alone, reflect the EYLF V2.0 (AGDE, 2022) requirement for collaborative partnership as core professional practice.</p></div></div>
+</div>
+  </div>
+  <div class="ctx-sec bg-white">
+    <h3 class="sec-h script">5. Community and Professional Partnerships</h3>
+    <div class="parts-wrap"><div class="part-card"><div class="part-left"><h4>1800RESPECT</h4><div class="part-contact">1800respect.org.au | 1800 737 732</div><p>National counselling and referral service for family violence, with professional guidance for educators responding to disclosures.</p><p class="collab-line"><strong>Collaboration:</strong> ECE settings are frequently the first point of disclosure for family violence. 1800RESPECT provides the professional consultation that helps educators respond safely without assuming a clinical role, since an unsupported or mishandled disclosure response can compound harm.</p></div></div>
+<div class="part-card"><div class="part-left"><h4>Australian Red Cross</h4><div class="part-contact">redcross.org.au</div><p>Disaster recovery support, psychosocial assistance, and emergency relief including the Pillowcase Program.</p><p class="collab-line"><strong>Collaboration:</strong> Baker et al. (2022) argue effective intersectoral responses require relationships built before crisis, not during it (p. 342). The Red Cross partnership is most valuable when established in advance of disaster season, transforming reactive crisis response into proactive community resilience.</p></div></div>
+<div class="part-card"><div class="part-left"><h4>DVConnect (Queensland)</h4><div class="part-contact">dvconnect.org | 1800 811 811</div><p>Crisis accommodation and specialist domestic violence support available 24 hours.</p><p class="collab-line"><strong>Collaboration:</strong> Woodrow et al. (2022) note that service fragmentation places coordination burdens on families least able to manage them (p. 366). A standing relationship with a dedicated DVConnect worker ensures referral is relational rather than procedural, which significantly increases the likelihood that families in crisis will accept support.</p></div></div>
+<div class="part-card"><div class="part-left"><h4>Kids Helpline</h4><div class="part-contact">kidshelpline.com.au | 1800 551 800</div><p>Accessible counselling for children and young people affected by violence, distress, or displacement.</p><p class="collab-line"><strong>Collaboration:</strong> Children exposed to family violence are rarely positioned to seek adult help through formal channels. Making Kids Helpline visible, familiar, and non-stigmatised within the service builds the help-seeking scaffolding that abuse narratives work to dismantle.</p></div></div>
+<div class="part-card"><div class="part-left"><h4>Disaster Recovery Chaplaincy Network</h4><div class="part-contact">drcn.org.au</div><p>Practical and psychosocial community support during disaster recovery in culturally sensitive, non-clinical ways.</p><p class="collab-line"><strong>Collaboration:</strong> For First Nations families displaced by disaster, or families whose faith is central to recovery, clinical support alone may be insufficient. The DRCN provides culturally sensitive, community-based psychosocial support that complements but does not replace mental health referral.</p></div></div>
+</div>
+  </div>
+  <div class="ctx-sec bg-lav">
+    <h3 class="sec-h script">6. Resources for Educators and Children</h3>
+    <div class="rtype-tabs">
+      <button class="rtype-btn active" onclick="showRT('cri','book',this)">📖 Storybooks</button>
+      <button class="rtype-btn" onclick="showRT('cri','media',this)">🎬 Media &amp; Podcasts</button>
+      <button class="rtype-btn" onclick="showRT('cri','web',this)">🌐 Websites</button>
+    </div>
+    <div id="cri-rw" class="rt-panel">
+      <h4 class="res-subh script">Websites</h4>
+      <div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('cri-web-car',-1)">&#8249;</button><div class="books-carousel" id="cri-web-car"><div class="res-slide"><div class="web-card"><div class="web-lbl">Resource</div><h5>1800RESPECT: Professional Resources</h5><a href="https://1800respect.org.au" target="_blank">1800respect.org.au</a><p>Educator guidance for responding safely to disclosures of family violence, with scenario-based tools and scripts.</p><p class="edu-use"><strong>Educator use:</strong> Download the educator disclosure guide; builds confidence and clarity for responding to complex disclosures without causing further harm.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Program</div><h5>Australian Red Cross: Pillowcase Program</h5><a href="https://www.redcross.org.au" target="_blank">www.redcross.org.au</a><p>Structured emergency preparedness education for young children that builds agency rather than fear.</p><p class="edu-use"><strong>Educator use:</strong> Implement as a whole-service curriculum project before disaster season; builds preparedness as a calm, empowering routine.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Framework</div><h5>Be You: Disaster Response and Recovery</h5><a href="https://beyou.edu.au" target="_blank">beyou.edu.au</a><p>Crisis response planning and whole-service recovery frameworks for early childhood settings affected by natural disaster or community trauma.</p><p class="edu-use"><strong>Educator use:</strong> Develop a service-level crisis plan that includes both child-facing strategies and educator wellbeing. Sustainable crisis response requires both.</p></div></div><div class="res-slide"><div class="web-card"><div class="web-lbl">Framework</div><h5>Trauma-Informed Care Implementation Resource Centre</h5><a href="https://www.ticresourcecentre.com.au" target="_blank">www.ticresourcecentre.com.au</a><p>Evidence-based frameworks and self-assessment tools for trauma-aware practice across early childhood, health, and community service settings.</p><p class="edu-use"><strong>Educator use:</strong> Use the self-assessment tool to audit and strengthen the service's trauma-informed approach systematically, not only in response to individual children.</p></div></div></div><button class="car-btn" onclick="moveCarousel('cri-web-car',1)">&#8250;</button></div>
+    </div>
+    <div id="cri-rb" class="rt-panel active">
+      <h4 class="res-subh script">Storybooks</h4>
+      <div class="carousel-outer">
+        <button class="car-btn" onclick="moveCarousel('cri-car',-1)">&#8249;</button>
+        <div class="books-carousel" id="cri-car">
+          <div class="book-slide">
+  <img src="https://m.media-amazon.com/images/I/71YHZLizGsL._SL1500_.jpg" alt="The Rabbit Listened (Doerrfeld, 2018)" class="book-cover-img" onerror="bookImgFallback(this)">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 2-4</span>
+    <h5>The Rabbit Listened (Doerrfeld, 2018)</h5>
+    <p>After something terrible happens, many well-meaning animals offer advice and solutions. Only the rabbit simply sits and listens, and that, finally, is enough. A profound story about presence over problem-solving.</p>
+    <p class="edu-use"><strong>Educator use:</strong> "What kind of support feels safe when something hard happens?" Children choose an animal representing their preferred support style. Builds self-awareness about individual support needs.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 1.2 (agency), 3.1 (emotional wellbeing)</span>
+  </div>
+</div><div class="book-slide">
+  <img src="https://covers.openlibrary.org/b/isbn/9781626726826-L.jpg" alt="After the Fall (Santat, 2017)" class="book-cover-img" onerror="bookImgFallback(this)">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 4-5</span>
+    <h5>After the Fall (Santat, 2017)</h5>
+    <p>Humpty Dumpty slowly, courageously reclaims the part of himself that loves to climb. Recovery is gradual, non-linear, and entirely possible.</p>
+    <p class="edu-use"><strong>Educator use:</strong> Children create a "brave step," something small they did even when they felt scared. Builds a resilience narrative that destigmatises fear and celebrates incremental agency.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 1.2 (resilience and agency), 4.1 (courage and persistence)</span>
+  </div>
+</div><div class="book-slide">
+  <img src="https://m.media-amazon.com/images/I/71CpN2bkCTL._SL1500_.jpg" alt="Ruby's Worry (Percival, 2018)" class="book-cover-img" onerror="bookImgFallback(this)">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 3-5</span>
+    <h5>Ruby's Worry (Percival, 2018)</h5>
+    <p>Ruby's worry grows until she shares it, and then it shrinks. A gentle story about the transformative power of help-seeking.</p>
+    <p class="edu-use"><strong>Educator use:</strong> Children draw or dictate a worry onto a paper stone and place it in a class worry jar; educator acknowledges each privately. Normalises help-seeking as strength.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 3.1 (emotional wellbeing), 5.1 (interacting verbally for a range of purposes)</span>
+  </div>
+</div><div class="book-slide">
+  <img src="https://m.media-amazon.com/images/I/71PKOJIUF7L._SL1250_.jpg" alt="A Shelter for Sadness (Booth, 2022)" class="book-cover-img" onerror="bookImgFallback(this)">
+  <div class="book-slide-body">
+    <span class="age-badge">Ages 3-5</span>
+    <h5>A Shelter for Sadness (Booth, 2022)</h5>
+    <p>A child builds a shelter where sadness is welcomed, tended with care, and eventually allowed to move on. A lyrical story about emotional acceptance and the agency of recovery.</p>
+    <p class="edu-use"><strong>Educator use:</strong> Children build their own shelter using loose parts, "a place where sad feelings are okay." The process is the learning.</p>
+    <span class="eylf-tag">EYLF V2.0: Outcomes 3.1 (emotional wellbeing), 4.4 (resourcefulness and resilience)</span>
+  </div>
+</div>
+        </div>
+        <button class="car-btn" onclick="moveCarousel('cri-car',1)">&#8250;</button>
+      </div>
+    </div>
+    <div id="cri-rm" class="rt-panel">
+      <h4 class="res-subh script">Media &amp; Podcasts</h4>
+      <div class="carousel-outer"><button class="car-btn" onclick="moveCarousel('cri-med-car',-1)">&#8249;</button><div class="books-carousel" id="cri-med-car"><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 2-4 | TV</div><h5>Sesame Street: Caring for Each Other (Sesame Workshop, 2020)</h5><a href="https://sesamestreet.org/caring" target="_blank">sesamestreet.org/caring</a><p>Purpose-built crisis response collection developed with trauma specialists, covering coping with change, natural disaster, and grief.</p><p class="edu-use"><strong>Educator use:</strong> "One way to care for yourself today; one way to care for a friend." Record on a class caring chart revisited across the term; builds community care as a daily habit, not only a crisis response.</p><span class="eylf-tag">EYLF V2.0: Outcomes 2.4 (social responsibility), 3.1 (emotional wellbeing)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 4-5 | Digital</div><h5>ABC Emergency: Ready Set Kids</h5><a href="https://emergency.abc.net.au/readysetkids" target="_blank">emergency.abc.net.au/readysetkids</a><p>Age-appropriate emergency preparedness content developed with Australian emergency services and child development specialists.</p><p class="edu-use"><strong>Educator use:</strong> Develop a simple emergency plan together; children create a safety card to take home; revisit annually as a calm, empowering routine.</p><span class="eylf-tag">EYLF V2.0: Outcomes 1.2 (agency and autonomy), 4.1 (initiative and confidence)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Ages 2-4 | TV</div><h5>Daniel Tiger: "Scary Feelings and Change" episodes (PBS Kids)</h5><p>Daniel navigates fear, loss, and change with adult support and named, transferable coping strategies applicable across crisis contexts.</p><p class="edu-use"><strong>Educator use:</strong> Practise the strategy together as a group; post it at child height; return to it during dysregulation. Normalise strategy use as daily practice, not only crisis response.</p><span class="eylf-tag">EYLF V2.0: Outcomes 3.1 (emotional wellbeing), 1.2 (resilience and agency)</span></div></div><div class="res-slide"><div class="media-card"><div class="media-lbl">Educator | Podcast</div><h5>Emerging Minds: Disaster Recovery and Trauma-Aware Practice</h5><a href="https://emergingminds.com.au/resources/podcasts" target="_blank">emergingminds.com.au/resources/podcasts</a><p>Evidence-based professional learning for educators responding to children and families affected by disaster and prolonged crisis.</p><p class="edu-use"><strong>Educator use:</strong> Use for whole-team planning before and after crisis events; develop a service-level protocol that includes educator self-care. Educators cannot co-regulate from a depleted position.</p><span class="eylf-tag">EYLF V2.0 Practice Principles: Collaborative Partnerships and Ongoing Learning</span></div></div></div><button class="car-btn" onclick="moveCarousel('cri-med-car',1)">&#8250;</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- REFERENCES -->
+<div id="ref" class="panel">
+
+  <!-- REF TAB NAV -->
+  <div class="ref-tabs">
+    <button class="ref-tab-btn active" data-tab="reftab-general" onclick="showRefTab('reftab-general',this)">🏠 General &amp; Core Texts</button>
+    <button class="ref-tab-btn" data-tab="reftab-eco" onclick="showRefTab('reftab-eco',this)">Economic</button>
+    <button class="ref-tab-btn" data-tab="reftab-soc" onclick="showRefTab('reftab-soc',this)">Social</button>
+    <button class="ref-tab-btn" data-tab="reftab-cul" onclick="showRefTab('reftab-cul',this)">Cultural</button>
+    <button class="ref-tab-btn" data-tab="reftab-hea" onclick="showRefTab('reftab-hea',this)">Health &amp; Wellbeing</button>
+    <button class="ref-tab-btn" data-tab="reftab-cri" onclick="showRefTab('reftab-cri',this)">Crisis &amp; Emergency</button>
+    <button class="ref-tab-btn" data-tab="reftab-ai" onclick="showRefTab('reftab-ai',this)">🤖 Generative AI</button>
+  </div>
+
+  <div class="ctx-hero">
+    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1400&q=75" alt="Reference library: books and academic resources">
+    <div class="ctx-overlay">
+      <span class="ctx-eyebrow">Portfolio References</span>
+      <h2 class="ctx-hero-title" id="ref-hero-title">Complete Reference List</h2>
+    </div>
+  </div>
+
+  <!-- TAB: GENERAL -->
+  <div id="reftab-general" class="ref-tab-panel active">
+    <div class="ref-wrap">
+      <h3 class="ref-h">Core Texts</h3>
+      <ul class="ref-list">
+        <li>Australian Government Department of Education [AGDE]. (2022). <em>Belonging, being and becoming: The early years learning framework for Australia (V2.0)</em>. Australian Government. <a href="https://www.acecqa.gov.au/sites/default/files/2023-01/EYLF-2022-V2.0.pdf">https://www.acecqa.gov.au</a></li>
+        <li>Baker, E., Kaplun, C., &amp; Dadich, A. (2022). Services working together to support children and their families. In R. Grace, J. Bowes, &amp; C. Woodrow (Eds.), <em>Children, families and communities</em> (6th ed., pp. 342-356). Oxford University Press Australia.</li>
+        <li>Early Childhood Australia. (2016). <em>ECA code of ethics</em>. Early Childhood Australia. <a href="https://www.earlychildhoodaustralia.org.au/our-work/eca-code-of-ethics/">https://www.earlychildhoodaustralia.org.au</a></li>
+        <li>Grace, R., Bowes, J., &amp; Woodrow, C. (Eds.). (2022). <em>Children, families and communities</em> (6th ed.). Oxford University Press Australia.</li>
+        <li>Grace, R., Townley, C., &amp; Woodrow, C. (2022). Understanding the child in context: An ecological approach to child development. In R. Grace, J. Bowes, &amp; C. Woodrow (Eds.), <em>Children, families and communities</em> (6th ed., pp. 30-43). Oxford University Press Australia.</li>
+        <li>Woodrow, C., Grace, R., &amp; Cashmore, J. (2022). Approaches to policy and practice to support children, families and communities. In R. Grace, J. Bowes, &amp; C. Woodrow (Eds.), <em>Children, families and communities</em> (6th ed., pp. 361-376). Oxford University Press Australia.</li>
+      </ul>
+      <h3 class="ref-h">Storybooks: All Contexts</h3>
+      <ul class="ref-list">
+        <li>Boelts, M. (2007). <em>Those shoes</em> (N. Z. Jones, Illus.). Candlewick Press.</li>
+        <li>Booth, A. (2022). <em>A shelter for sadness</em> (D. Litchfield, Illus.). Templar Publishing.</li>
+        <li>Briggs, A. (2020). <em>Our home, our heartbeat</em>. Lothian Children's Books.</li>
+        <li>Bunting, E. (1991). <em>Fly away home</em> (R. Himler, Illus.). Clarion Books.</li>
+        <li>de la Pena, M. (2015). <em>Last stop on Market Street</em> (C. Robinson, Illus.). G. P. Putnam's Sons.</li>
+        <li>Do, A., &amp; Do, S. (2011). <em>The little refugee</em> (B. Whatmore, Illus.). Allen &amp; Unwin.</li>
+        <li>Doerrfeld, C. (2018). <em>The rabbit listened</em>. Roaring Brook Press.</li>
+        <li>Eland, E. (2019). <em>When sadness comes to call</em>. Andersen Press.</li>
+        <li>Fox, M. (1997). <em>Whoever you are</em> (L. Staub, Illus.). Harcourt Brace.</li>
+        <li>Karst, P. (2000). <em>The invisible string</em> (J. Lew-Vriethoff, Illus.). DeVorss &amp; Company.</li>
+        <li>Kobald, I. (2014). <em>My two blankets</em> (F. Blackwood, Illus.). Harcourt Children's Books.</li>
+        <li>Llenas, A. (2012). <em>The colour monster: A pop-up book of feelings</em>. Templar Publishing.</li>
+        <li>Masurel, C. (2001). <em>Two homes</em> (K. Denton, Illus.). Candlewick Press.</li>
+        <li>Murphy, A. J., &amp; Kennedy, L. (2016). <em>Welcome to country</em>. Lothian Children's Books.</li>
+        <li>Percival, T. (2018). <em>Ruby's worry</em>. Bloomsbury Children's Books.</li>
+        <li>Santat, D. (2017). <em>After the fall: How Humpty Dumpty got back up again</em>. Roaring Brook Press.</li>
+        <li>Simmonds, J. (2003). <em>A safe place for Rufus</em>. Child's Play International.</li>
+        <li>Spelman, C. M. (2004). <em>When I miss you</em> (K. Parkinson, Illus.). Albert Whitman &amp; Company.</li>
+        <li>Witek, J. (2014). <em>In my heart: A book of feelings</em> (C. Roussey, Illus.). Abrams Appleseed.</li>
+        <li>Woodson, J. (2012). <em>Each kindness</em> (E. B. Lewis, Illus.). Nancy Paulsen Books.</li>
+      </ul>
+      <h3 class="ref-h">Media and Digital Resources: All Contexts</h3>
+      <ul class="ref-list">
+        <li>ABC Australia. (1966–present). <em>Play School</em> [Television series]. ABC Kids.</li>
+        <li>BBC Studios/Acamar Films. (2014–present). <em>Hey Duggee</em> [Animated television series]. ABC iView.</li>
+        <li>ABC Australia. (n.d.). <em>ABC Education: Community and economics clips</em> [Video collection]. <a href="https://www.abc.net.au/education">https://www.abc.net.au/education</a></li>
+        <li>ABC Emergency. (n.d.). <em>Ready set kids</em> [Website]. <a href="https://emergency.abc.net.au/readysetkids">https://emergency.abc.net.au/readysetkids</a></li>
+        <li>Beyond Blue. (n.d.). <em>Be You educator podcast</em> [Podcast]. <a href="https://beyou.edu.au">https://beyou.edu.au</a></li>
+        <li>Cosmic Kids. (n.d.). <em>Cosmic kids yoga: Emotions adventures</em> [YouTube channel]. <a href="https://www.youtube.com/CosmicKidsYoga">https://www.youtube.com/CosmicKidsYoga</a></li>
+        <li>Emerging Minds. (2021-present). <em>Emerging Minds podcast</em> [Podcast]. <a href="https://emergingminds.com.au/resources/podcasts">https://emergingminds.com.au</a></li>
+        <li>Ludo Studio. (2018-present). <em>Bluey</em> [Television series]. ABC Kids.</li>
+        <li>NITV/ABC. (2017-present). <em>Little J &amp; Big Cuz</em> [Animated television series]. NITV/ABC.</li>
+        <li>PBS Kids. (2012-present). <em>Daniel Tiger's neighbourhood</em> [Television series]. PBS Kids.</li>
+        <li>Sesame Workshop. (2020-present). <em>Sesame Street: Caring for each other</em> [Video collection]. <a href="https://www.sesamestreet.org/caring">https://www.sesamestreet.org/caring</a></li>
+        <li>SNAICC. (n.d.). <em>SNAICC podcast and webinar series</em> [Podcast]. <a href="https://www.snaicc.org.au/resources">https://www.snaicc.org.au/resources</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB: ECONOMIC -->
+  <div id="reftab-eco" class="ref-tab-panel">
+    <div class="ref-wrap">
+      <h3 class="ref-ctx-h">Economic Contexts</h3>
+      <ul class="ref-list">
+        <li>Australian Council of Social Service &amp; UNSW Sydney. (2023). <em>Poverty in Australia 2023: Who is affected</em>. ACOSS. <a href="https://www.acoss.org.au/poverty">https://www.acoss.org.au/poverty</a></li>
+        <li>Department of Education. (2023). <em>Child care subsidy</em>. Australian Government. <a href="https://www.education.gov.au">https://www.education.gov.au</a></li>
+        <li>Grace, R., &amp; Baird, K. (2022). Social inequities in Australian communities and the impact on children and families. In R. Grace, J. Bowes, &amp; C. Woodrow (Eds.), <em>Children, families and communities</em> (6th ed., pp. 241-256). Oxford University Press Australia.</li>
+        <li>Queensland Government. (2023a). <em>Homes for Queenslanders: Queensland's housing strategy 2023–2027</em>. Queensland Government. <a href="https://www.qld.gov.au">https://www.qld.gov.au</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB: SOCIAL -->
+  <div id="reftab-soc" class="ref-tab-panel">
+    <div class="ref-wrap">
+      <h3 class="ref-ctx-h">Social Contexts</h3>
+      <ul class="ref-list">
+        <li>Australian Institute of Health and Welfare. (2022). <em>Child protection Australia 2020–21</em>. AIHW. <a href="https://www.aihw.gov.au">https://www.aihw.gov.au</a></li>
+        <li>Cashmore, J., Conley Wright, A., &amp; Metcalfe, L. (2022). Child protection and out-of-home care. In R. Grace, J. Bowes, &amp; C. Woodrow (Eds.), <em>Children, families and communities</em> (6th ed., pp. 266-278). Oxford University Press Australia.</li>
+        <li>Department of Social Services. (2021). <em>Safe and supported: The national framework for protecting Australia's children 2021–2031</em>. Australian Government. <a href="https://www.dss.gov.au">https://www.dss.gov.au</a></li>
+        <li>Murray, E., &amp; Harrison, L. J. (2022). Interconnections among family, childcare and education. In R. Grace, J. Bowes, &amp; C. Woodrow (Eds.), <em>Children, families and communities</em> (6th ed., pp. 216-229). Oxford University Press Australia.</li>
+        <li>Queensland Government. (1999). <em>Child Protection Act 1999</em>. Queensland Legislation. <a href="https://www.legislation.qld.gov.au">https://www.legislation.qld.gov.au</a></li>
+        <li>Queensland Government. (2023c). <em>Queensland child protection reform roadmap 2023–2026</em>. Queensland Government. <a href="https://www.qld.gov.au">https://www.qld.gov.au</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB: CULTURAL -->
+  <div id="reftab-cul" class="ref-tab-panel">
+    <div class="ref-wrap">
+      <h3 class="ref-ctx-h">Cultural &amp; Diversity Contexts</h3>
+      <ul class="ref-list">
+        <li>Coalition of Peaks. (2020). <em>National agreement on closing the gap</em>. Coalition of Aboriginal and Torres Strait Islander Peak Organisations. <a href="https://www.closingthegap.gov.au">https://www.closingthegap.gov.au</a></li>
+        <li>Department of Home Affairs. (2018). <em>National settlement framework</em>. Australian Government. <a href="https://immi.homeaffairs.gov.au">https://immi.homeaffairs.gov.au</a></li>
+        <li>Grace, R., &amp; Menzie, K. (2022). The Stolen Generations of Aboriginal and Torres Strait Islander children: Understanding the impact of cultural hegemony in policy and intervention. In R. Grace, J. Bowes, &amp; C. Woodrow (Eds.), <em>Children, families and communities</em> (6th ed., pp. 282-304). Oxford University Press Australia.</li>
+        <li>Queensland Government. (2019). <em>Human Rights Act 2019</em>. Queensland Legislation. <a href="https://www.legislation.qld.gov.au">https://www.legislation.qld.gov.au</a></li>
+        <li>Queensland Government. (2023b). <em>Path to Treaty Act 2023</em>. Queensland Legislation. <a href="https://www.legislation.qld.gov.au">https://www.legislation.qld.gov.au</a></li>
+        <li>Sanagavarapu, P. (2022). Refugee children: Supporting families in transitions. In R. Grace, J. Bowes, &amp; C. Woodrow (Eds.), <em>Children, families and communities</em> (6th ed., pp. 130-148). Oxford University Press Australia.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB: HEALTH -->
+  <div id="reftab-hea" class="ref-tab-panel">
+    <div class="ref-wrap">
+      <h3 class="ref-ctx-h">Health &amp; Wellbeing Contexts</h3>
+      <ul class="ref-list">
+        <li>Australian Bureau of Statistics. (2022). <em>National study of mental health and wellbeing</em>. ABS. <a href="https://www.abs.gov.au">https://www.abs.gov.au</a></li>
+        <li>Australian Government. (2021). <em>The national mental health and suicide prevention plan</em>. Australian Government. <a href="https://www.health.gov.au">https://www.health.gov.au</a></li>
+        <li>Australian Institute of Family Studies. (2020). <em>Children of parents with a mental illness</em>. AIFS. <a href="https://aifs.gov.au">https://aifs.gov.au</a></li>
+        <li>PANDA. (2023). <em>Perinatal mental health statistics</em>. PANDA. <a href="https://www.panda.org.au">https://www.panda.org.au</a></li>
+        <li>Queensland Government. (2016a). <em>Mental Health Act 2016</em>. Queensland Legislation. <a href="https://www.legislation.qld.gov.au">https://www.legislation.qld.gov.au</a></li>
+        <li>Queensland Health. (2020). <em>Perinatal and infant mental health: Policy and strategic direction 2020–2025</em>. Queensland Government. <a href="https://www.health.qld.gov.au">https://www.health.qld.gov.au</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB: CRISIS -->
+  <div id="reftab-cri" class="ref-tab-panel">
+    <div class="ref-wrap">
+      <h3 class="ref-ctx-h">Crisis &amp; Emergency Contexts</h3>
+      <ul class="ref-list">
+        <li>Australian Institute of Health and Welfare. (2023). <em>Family, domestic and sexual violence</em>. AIHW. <a href="https://www.aihw.gov.au">https://www.aihw.gov.au</a></li>
+        <li>Department of Social Services. (2022). <em>National plan to end violence against women and children 2022–2032</em>. Australian Government. <a href="https://www.dss.gov.au">https://www.dss.gov.au</a></li>
+        <li>National Emergency Management Agency. (2018). <em>National disaster risk reduction framework</em>. Australian Government. <a href="https://www.homeaffairs.gov.au">https://www.homeaffairs.gov.au</a></li>
+        <li>Queensland Government. (2003). <em>Disaster Management Act 2003</em>. Queensland Legislation. <a href="https://www.legislation.qld.gov.au">https://www.legislation.qld.gov.au</a></li>
+        <li>Queensland Government. (2012, amended 2016). <em>Domestic and Family Violence Protection Act 2012</em>. Queensland Legislation. <a href="https://www.legislation.qld.gov.au">https://www.legislation.qld.gov.au</a></li>
+        <li>Queensland Government. (2016b). <em>Queensland domestic and family violence prevention strategy 2016–2026</em>. Queensland Government. <a href="https://www.justice.qld.gov.au">https://www.justice.qld.gov.au</a></li>
+        <li>Royal Commission into National Natural Disaster Arrangements. (2020). <em>Royal commission into national natural disaster arrangements: Report</em>. Australian Government. <a href="https://naturaldisaster.royalcommission.gov.au">https://naturaldisaster.royalcommission.gov.au</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB: GENERATIVE AI -->
+  <div id="reftab-ai" class="ref-tab-panel">
+    <div class="ref-wrap">
+      <div class="genai-box">
+        <h4>Generative AI disclosure</h4>
+        <p>This assessment used generative artificial intelligence (GenAI) and AI-assisted digital tools in limited and ethical ways. ChatGPT (GPT-5.4) was used to assist with organising the digital portfolio structure, including approximate word count allocation, and with the curation of relevant resources for educators and children. Grammarly was used to improve grammatical accuracy, clarity, and sentence flow during the editing process. NicePage, including AI-assisted website design features, was used to support the visual development of the digital portfolio interface, including page layout and interactive features such as the navigation menu. All critical analysis, interpretation of literature and policy, synthesis, resource selection, and final academic judgement are my own.</p>
+        <h4>GenAI bibliography</h4>
+        <p><strong>OpenAI. (2026).</strong> <em>ChatGPT (GPT-5.4)</em> [Large language model]. <a href="https://chatgpt.com/share/69e74fa8-50f0-8399-8e68-b3e8af24d6d7">https://chatgpt.com/share/69e74fa8-50f0-8399-8e68-b3e8af24d6d7</a><br>Used to assist with organising the digital portfolio structure, including approximate word count allocation, and with the curation of relevant resources for educators and children.</p>
+        <p><strong>Grammarly. (2026).</strong> <em>Grammarly</em> [AI writing assistance tool]. <a href="https://www.grammarly.com/">https://www.grammarly.com/</a><br>Used to improve grammatical accuracy, clarity, and sentence flow during the editing process.</p>
+        <p><strong>Nicepage. (2026).</strong> <em>Nicepage</em> [AI-assisted website design tool]. <a href="https://nicepage.com/">https://nicepage.com/</a><br>Used to support the visual development of the digital portfolio interface, including page layout and interactive features such as the navigation menu.</p>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+</main>
+
+<footer class="site-footer">
+  Ana Paula Sapatini Marques <span>&middot;</span> IKO3007958 <span>&middot;</span> EPRO503 Assessment 3 <span>&middot;</span> Digital Portfolio
+</footer>
+
+<script>
+function clearNav() {
+  document.querySelectorAll('.panel,.ctx-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-inner button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.has-dropdown').forEach(d => d.classList.remove('open'));
+}
+function showPanel(id, btn) {
+  clearNav();
+  document.getElementById(id).classList.add('active');
+  if (btn) {
+    btn.classList.add('active');
+    const parent = btn.closest('.has-dropdown');
+    if (parent) parent.querySelector('.nav-parent').classList.add('active');
+  }
+  document.getElementById('ctx-switcher').classList.remove('visible');
+  window.scrollTo(0, 0);
+  if (id === 'home') { setTimeout(initCtx, 60); setTimeout(initFccCtx, 60); }
+}
+function showCtx(id, btn) {
+  clearNav();
+  document.getElementById(id).classList.add('active');
+  document.getElementById('nav-fcc').classList.add('active');
+  if (btn) btn.classList.add('active');
+  // Update context switcher strip
+  var switcher = document.getElementById('ctx-switcher');
+  var ctxIds = ['eco','soc','cul','hea','cri'];
+  if (ctxIds.indexOf(id) !== -1) {
+    switcher.classList.add('visible');
+    switcher.querySelectorAll('.ctx-sw-btn').forEach(function(b){
+      b.classList.toggle('active', b.dataset.ctx === id);
+    });
+  } else {
+    switcher.classList.remove('visible');
+  }
+  window.scrollTo(0, 0);
+}
+function showRef(tabId) {
+  clearNav();
+  document.getElementById('ref').classList.add('active');
+  document.getElementById('nav-ref').classList.add('active');
+  document.getElementById('ctx-switcher').classList.remove('visible');
+  window.scrollTo(0, 0);
+  setTimeout(() => showRefTab(tabId || 'reftab-general'), 60);
+}
+function showRefTab(tabId, btn) {
+  const titleMap = {
+    'reftab-general': 'Complete Reference List',
+    'reftab-eco': 'Economic Contexts - Reference List',
+    'reftab-soc': 'Social Contexts - Reference List',
+    'reftab-cul': 'Cultural & Diversity Contexts - Reference List',
+    'reftab-hea': 'Health & Wellbeing Contexts - Reference List',
+    'reftab-cri': 'Crisis & Emergency Contexts - Reference List',
+    'reftab-ai': 'Generative AI Bibliography'
+  };
+  document.querySelectorAll('.ref-tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ref-tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById(tabId);
+  if (panel) panel.classList.add('active');
+  const heroTitle = document.getElementById('ref-hero-title');
+  if (heroTitle) heroTitle.textContent = titleMap[tabId] || 'Complete Reference List';
+  if (btn) { btn.classList.add('active'); return; }
+  const b = document.querySelector('.ref-tab-btn[data-tab="' + tabId + '"]');
+  if (b) b.classList.add('active');
+}
+function toggleNav(btn) {
+  const li = btn.closest('.has-dropdown');
+  const isOpen = li.classList.contains('open');
+  document.querySelectorAll('.has-dropdown').forEach(d => d.classList.remove('open'));
+  if (!isOpen) {
+    li.classList.add('open');
+    const dropdown = li.querySelector('.nav-dropdown');
+    const anchorBtn = li.querySelector('.nav-parent');
+    const rect = anchorBtn.getBoundingClientRect();
+    dropdown.style.top  = rect.bottom + 'px';
+    dropdown.style.left = rect.left + 'px';
+  }
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.has-dropdown')) {
+    document.querySelectorAll('.has-dropdown').forEach(d => d.classList.remove('open'));
+  }
+});
+function showRT(ctx, type, btn) {
+  const panel = document.getElementById(ctx + '-r' + type[0]);
+  if (!panel) return;
+  const wrap = panel.closest('.ctx-sec');
+  wrap.querySelectorAll('.rt-panel').forEach(p => p.classList.remove('active'));
+  wrap.querySelectorAll('.rtype-btn').forEach(b => b.classList.remove('active'));
+  panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+function moveCarousel(id, dir) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const slide = el.querySelector('.book-slide');
+  const w = slide ? slide.offsetWidth + 20 : 280;
+  el.scrollBy({ left: dir * w, behavior: 'smooth' });
+}
+
+/* ── CONTEXT SLIDER (generic) ── */
+function initSlider(outerEl, trackId, prevId, nextId, dotsId, idxRef) {
+  const outer = typeof outerEl === 'string' ? document.getElementById(outerEl) : outerEl;
+  if (!outer) return 0;
+  const items = outer.querySelectorAll('.ctx-slider-item');
+  const vis = getCtxVis();
+  const w = outer.offsetWidth / vis;
+  items.forEach(el => { el.style.width = w + 'px'; });
+  const max = items.length - vis;
+  const idx = Math.min(idxRef, Math.max(0, max));
+  document.getElementById(trackId).style.transform = `translateX(-${idx * w}px)`;
+  const prev = document.getElementById(prevId);
+  const next = document.getElementById(nextId);
+  if (prev) prev.disabled = idx <= 0;
+  if (next) next.disabled = idx >= max;
+  buildDots(dotsId, max, idx, trackId, outerEl, prevId, nextId);
+  return idx;
+}
+function moveSlider(outerEl, trackId, prevId, nextId, dotsId, idxRef, dir) {
+  const outer = typeof outerEl === 'string' ? document.getElementById(outerEl) : outerEl;
+  if (!outer) return idxRef;
+  const items = outer.querySelectorAll('.ctx-slider-item');
+  const vis = getCtxVis();
+  const max = items.length - vis;
+  const idx = Math.max(0, Math.min(idxRef + dir, max));
+  const w = outer.offsetWidth / vis;
+  document.getElementById(trackId).style.transform = `translateX(-${idx * w}px)`;
+  const prev = document.getElementById(prevId);
+  const next = document.getElementById(nextId);
+  if (prev) prev.disabled = idx <= 0;
+  if (next) next.disabled = idx >= max;
+  document.querySelectorAll(`#${dotsId} .ctx-dot`).forEach((d, i) => d.classList.toggle('active', i === idx));
+  return idx;
+}
+function buildDots(dotsId, max, activeIdx, trackId, outerEl, prevId, nextId) {
+  const el = document.getElementById(dotsId);
+  if (!el) return;
+  el.innerHTML = '';
+  for (let i = 0; i <= max; i++) {
+    const d = document.createElement('button');
+    d.className = 'ctx-dot' + (i === activeIdx ? ' active' : '');
+    d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    const pos = i;
+    d.onclick = () => {
+      if (dotsId === 'ctx-dots') { ctxIdx = pos - 1; moveCtx(1); }
+      else { fccIdx = pos - 1; moveFccCtx(1); }
+    };
+    el.appendChild(d);
+  }
+}
+
+/* ── HOME SLIDER ── */
+let ctxIdx = 0;
+
+function getCtxVis() {
+  return window.innerWidth < 580 ? 1 : window.innerWidth < 880 ? 2 : 3;
+}
+
+function initCtx() {
+  const outer = document.querySelector('#home .ctx-slider-outer');
+  if (!outer) return;
+  ctxIdx = initSlider(outer, 'ctx-track', 'ctx-prev', 'ctx-next', 'ctx-dots', ctxIdx);
+}
+function moveCtx(dir) {
+  const outer = document.querySelector('#home .ctx-slider-outer');
+  ctxIdx = moveSlider(outer, 'ctx-track', 'ctx-prev', 'ctx-next', 'ctx-dots', ctxIdx, dir);
+}
+
+/* ── FCC SLIDER ── */
+let fccIdx = 0;
+function initFccCtx() {
+  fccIdx = initSlider('fcc-outer', 'fcc-track', 'fcc-prev', 'fcc-next', 'fcc-dots', fccIdx);
+}
+function moveFccCtx(dir) {
+  fccIdx = moveSlider('fcc-outer', 'fcc-track', 'fcc-prev', 'fcc-next', 'fcc-dots', fccIdx, dir);
+}
+
+window.addEventListener('resize', () => { initCtx(); initFccCtx(); });
+window.addEventListener('load', () => { initCtx(); initFccCtx(); });
+
+/* ── BOOK COVER FALLBACK ── */
+function bookImgFallback(img) {
+  var m = img.src.match(/isbn[\/=](\d{9,13}X?)/i);
+  var isbn = m ? m[1].replace(/X$/i,'') : null;
+  var tried = img.dataset.tried || '0';
+  if (isbn && tried === '0') {
+    img.dataset.tried = '1';
+    img.src = 'https://books.google.com/books/content?isbn=' + isbn + '&printsec=frontcover&img=1&zoom=3';
+  } else if (isbn && tried === '1' && isbn.length === 13) {
+    img.dataset.tried = '2';
+    img.src = 'https://covers.openlibrary.org/b/isbn/' + isbn.slice(3) + '-L.jpg';
+  } else {
+    img.onerror = null;
+    img.style.display = 'none';
+    img.parentElement.style.background = 'linear-gradient(135deg,#e8eaf2,#d0d6e8)';
+  }
+}
+
+</script>
+</body>
+</html>
